@@ -12,12 +12,9 @@ class Libwasmer < Formula
   depends_on "wasmer" => :build
 
   def install
-    system "make", "build-capi"
-    lib.install "target/release/libwasmer.so"
-    include.install "lib/c-api/wasmer.h"
-    include.install "lib/c-api/wasmer_wasm.h"
-    include.install "lib/c-api/tests/wasm-c-api/include/wasm.h"
-
+    system "make", "build-capi", "package-capi"
+    rm package/README.md
+    prefix.install Dir["package/*"]
     ENV["WASMER_DIR"] = "#{prefix}"
     mkdir_p "#{prefix}/lib/pkgconfig"
     system "bash", "-c", "wasmer config --pkg-config > #{prefix}/lib/pkgconfig/wasmer.pc"
