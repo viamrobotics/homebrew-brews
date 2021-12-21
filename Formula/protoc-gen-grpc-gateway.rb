@@ -1,8 +1,8 @@
 class ProtocGenGrpcGateway < Formula
   desc ""
   homepage ""
-  url "https://github.com/grpc-ecosystem/grpc-gateway/archive/refs/tags/v2.6.0.tar.gz"
-  sha256 "4a1a50fcb2dafb0134db0be669d3d8d8dd0d6933f88a3e580fee2727ccf5ebc2"
+  url "https://github.com/grpc-ecosystem/grpc-gateway/archive/refs/tags/v2.7.2.tar.gz"
+  sha256 "6bbbaef3cef058cec015dbfca6cf2cde67b8337f8e6edbbb887a462781edae45"
   license "BSD-3-Clause"
 
   depends_on "go" => :build
