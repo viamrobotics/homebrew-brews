@@ -10,12 +10,12 @@ class Tensorflowlite < Formula
 
   def install
     inreplace "tensorflow/lite/c/CMakeLists.txt", /common\.c$/, "common.cc"
-    mkdir "build"
+    mkdir "builddir"
 
-    system "cmake", "-Bbuild", "-Stensorflow/lite/c"
-    system "cmake", "--build", "build", "-j"
+    system "cmake", "-Bbuilddir", "-Stensorflow/lite/c"
+    system "cmake", "--build", "builddir", "-j"
 
-    lib.install "build/libtensorflowlite_c.so"
+    lib.install Dir["builddir/libtensorflowlite_c.*"]
 
     mkdir_p include/"tensorflow/lite/c"
     include.install "tensorflow/lite/builtin_ops.h" => "tensorflow/lite/builtin_ops.h"
