@@ -13,7 +13,7 @@ class Tensorflowlite < Formula
     mkdir "builddir"
 
     system "cmake", "-Bbuilddir", "-Stensorflow/lite/c"
-    system "cmake", "--build", "builddir", "-j"
+    system "cmake", "--build", "builddir", "-j16"
 
     lib.install Dir["builddir/libtensorflowlite_c.*"]
 
