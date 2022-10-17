@@ -32,6 +32,8 @@ class ViamServer < Formula
   end
 
   service do
+    log_path var/"log/viam.log"
+    error_log_path var/"log/viam.log"
     run [bin/"viam-server", "-config", etc/"viam.json"]
   end
 
