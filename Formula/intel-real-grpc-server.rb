@@ -1,4 +1,4 @@
-class IntelRealGRPCServer < Formula
+class IntelRealGrpcServer < Formula
   desc "A Viam camera GRPC server for the Intel RealSense"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/camera-servers/archive/refs/tags/v0.1.1.tar.gz"
@@ -9,7 +9,6 @@ class IntelRealGRPCServer < Formula
   depends_on "pkg-config" => :build
   depends_on "go" => :build
   depends_on "grpc"
-  depends_on "protobuf"
   depends_on "libhttpserver"
   depends_on "opencv"
   depends_on "librealsense"
