@@ -4,7 +4,7 @@ class OrbGrpcServer < Formula
   url "https://github.com/viamrobotics/slam/archive/refs/tags/v0.1.4.tar.gz"
   sha256 "26af8f02105cb2bfe3c8f3e6ba9b73100ea8d77098d58a535b1e2d4c56bb907c"
   license "Apache-2.0"
-  head "https://github.com/viamrobotics/slam.git", branch: "DATA-605"
+  head "https://github.com/viamrobotics/slam.git", branch: "main"
 
   depends_on "pkg-config" => :build
   depends_on "go" => :build
