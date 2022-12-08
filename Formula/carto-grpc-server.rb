@@ -1,6 +1,3 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class CartoGrpcServer < Formula
   desc "A Viam slam GRPC server for Cartographer"
   homepage "https://www.viam.com/"
