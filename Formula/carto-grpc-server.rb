@@ -2,26 +2,27 @@ class CartoGrpcServer < Formula
   desc "A Viam slam GRPC server for Cartographer"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/slam.git",
-    tag: "v0.1.10"
+    tag: "v0.1.11",
+    revision: "28aba7cbee24f4e35b3a2edee8dc387a22461291"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/slam.git", branch: "main"
 
   depends_on "go" => :build
   depends_on "cmake" => :build
+  depends_on "ninja" => :build
   depends_on "abseil"
-  depends_on  "boost" 
+  depends_on "boost"
   depends_on "ceres-solver"
   depends_on "grpc"
-  depends_on "protobuf" 
-  depends_on  "ninja" => :build
-  depends_on  "cairo" 
-  depends_on  "googletest"
-  depends_on  "lua@5.3"
-  depends_on  "openssl"
-  depends_on  "eigen" 
-  depends_on  "gflags" 
+  depends_on "protobuf"
+  depends_on "cairo"
+  depends_on "googletest"
+  depends_on "lua@5.3"
+  depends_on "openssl"
+  depends_on "eigen"
+  depends_on "gflags"
   depends_on "glog"
-  depends_on  "suite-sparse" 
+  depends_on "suite-sparse"
   depends_on "sphinx-doc"
   depends_on "pcl"
 
