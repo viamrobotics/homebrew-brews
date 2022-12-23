@@ -14,7 +14,11 @@ class ViamServer < Formula
   depends_on "ffmpeg"
 
   def install
-    system "make", "server"
+    with_env(
+      "TAG_VERSION" => "v#{version.to_s}"
+    ) do
+      system "make", "server"
+    end
     if OS.linux?
       if Hardware::CPU.intel?
         bin.install "bin/Linux-x86_64/server" => "viam-server"
