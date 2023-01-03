@@ -23,12 +23,13 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - name: Setup homebrew tap and git config
+    - name: Setup homebrew and git config
       run: |
         mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics
         ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics/homebrew-brews
         git config --global --add safe.directory '*'
         git config --global url."https://github.com/".insteadOf git@github.com:
+        brew developer on
 
     - name: Bump viam-server
       run: ./bump-version.sh viam-server
