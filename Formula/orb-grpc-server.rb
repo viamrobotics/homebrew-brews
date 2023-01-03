@@ -2,8 +2,8 @@ class OrbGrpcServer < Formula
   desc "A Viam slam GRPC server for ORB_SLAM3"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/slam.git",
-    tag: "v0.1.11",
-    revision: "28aba7cbee24f4e35b3a2edee8dc387a22461291"
+    tag: "v0.1.14",
+    revision: "3d5e5c3b3e844d4a25d16d7a1d9dfffcfa0fb14b"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/slam.git", branch: "main"
 
