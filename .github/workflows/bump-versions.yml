@@ -1,0 +1,39 @@
+name: Bump Versions
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  schedule:
+    - cron: '0 * * * *' # hourly
+  workflow_dispatch:
+
+jobs:
+  bump-versions:
+    name: Bump Package Versions
+    runs-on: [x64, qemu-host]
+    container:
+      image: homebrew/brews
+    timeout-minutes: 10
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Link brew tap
+      run: |
+        mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/Otterverse
+        ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/Otterverse/homebrew-brews
+
+    - name: Bump viam-server
+      run: ./bump-version.sh viam-server
+
+    - name: Bump carto-grpc-server
+      run: ./bump-version.sh carto-grpc-server
+
+    - name: Bump orb-grpc-server
+      run: ./bump-version.sh orb-grpc-server
+
+    - name: Commit changes
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Auto-update of package versions
