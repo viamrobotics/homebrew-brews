@@ -28,8 +28,7 @@ jobs:
       run: |
         mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics
         ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics/homebrew-brews
-        git config --global --add safe.directory "$GITHUB_WORKSPACE"
-        git config --global --add safe.directory /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics/homebrew-brews
+        git config --global --add safe.directory '*'
 
     - name: Bump viam-server
       run: ./bump-version.sh viam-server

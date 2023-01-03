@@ -17,6 +17,4 @@ then
 	exit 0
 fi
 
-git status
-
 brew bump-formula-pr --write-only --version $NEW_VERSION $FORMULA
