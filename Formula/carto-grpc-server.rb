@@ -40,7 +40,7 @@ class CartoGrpcServer < Formula
       share.install "viam-cartographer/lua_files/updating_a_map.lua" => "cartographer/lua_files/"
       share.install "viam-cartographer/cartographer/configuration_files/map_builder.lua" => "cartographer/lua_files/"
       share.install "viam-cartographer/cartographer/configuration_files/pose_graph.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_2d.lua" =>"cartographer/lua_files/"
+      share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_2d.lua" => "cartographer/lua_files/"
       share.install "viam-cartographer/cartographer/configuration_files/map_builder_server.lua" => "cartographer/lua_files/"
       share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder.lua" => "cartographer/lua_files/"
       share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_3d.lua" => "cartographer/lua_files/"
