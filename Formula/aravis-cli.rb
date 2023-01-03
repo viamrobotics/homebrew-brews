@@ -22,5 +22,4 @@ class AravisCli < Formula
       system "ninja", "install"
     end
   end
-
 end

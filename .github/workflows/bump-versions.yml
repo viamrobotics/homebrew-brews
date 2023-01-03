@@ -12,7 +12,6 @@ on:
 jobs:
   bump-versions:
     name: Bump Package Versions
-    #runs-on: [x64, qemu-host]
     runs-on: ubuntu-latest
     container:
       image: homebrew/brew

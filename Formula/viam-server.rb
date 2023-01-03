@@ -1,5 +1,5 @@
 class ViamServer < Formula
-  desc "The main server application of the viam robot development kit (RDK)"
+  desc "Main server application of the viam robot development kit (RDK)"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.2.10.tar.gz"
   sha256 "55dd954b1e69cdd84082d7fc7554e962dfdde275d0e8c7caf856518d41035948"
@@ -7,15 +7,15 @@ class ViamServer < Formula
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   depends_on "go" => :build
-  depends_on "nlopt"
-  depends_on "x264"
-  depends_on "opus"
-  depends_on "tensorflowlite" 
   depends_on "ffmpeg"
+  depends_on "nlopt"
+  depends_on "opus"
+  depends_on "tensorflowlite"
+  depends_on "x264"
 
   def install
     with_env(
-      "TAG_VERSION" => "v#{version.to_s}"
+      "TAG_VERSION" => "v#{version}",
     ) do
       system "make", "server"
     end
