@@ -12,13 +12,15 @@ on:
 jobs:
   bump-versions:
     name: Bump Package Versions
-    runs-on: [x64, qemu-host]
+    #runs-on: [x64, qemu-host]
+    runs-on: ubuntu-latest
     container:
       image: homebrew/brews
     timeout-minutes: 10
     steps:
     - name: Check out code
       uses: actions/checkout@v3
+
     - name: Link brew tap
       run: |
         mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/Otterverse
@@ -34,6 +36,6 @@ jobs:
       run: ./bump-version.sh orb-grpc-server
 
     - name: Commit changes
-    - uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Auto-update of package versions
