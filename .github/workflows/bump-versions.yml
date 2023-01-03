@@ -15,7 +15,7 @@ jobs:
     #runs-on: [x64, qemu-host]
     runs-on: ubuntu-latest
     container:
-      image: homebrew/brews
+      image: homebrew/brew
     timeout-minutes: 10
     steps:
     - name: Check out code
