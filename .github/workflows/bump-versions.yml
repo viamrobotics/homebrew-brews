@@ -24,8 +24,8 @@ jobs:
 
     - name: Link brew tap
       run: |
-        mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/Otterverse
-        ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/Otterverse/homebrew-brews
+        mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics
+        ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobitics/homebrew-brews
 
     - name: Bump viam-server
       run: ./bump-version.sh viam-server
