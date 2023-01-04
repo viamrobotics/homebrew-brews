@@ -25,5 +25,4 @@ class Tensorflowlite < Formula
     include.install "tensorflow/lite/c/c_api_types.h" => "tensorflow/lite/c/c_api_types.h"
     include.install "tensorflow/lite/c/common.h" => "tensorflow/lite/c/common.h"
   end
-
 end
