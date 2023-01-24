@@ -2,8 +2,8 @@ class CartoGrpcServer < Formula
   desc "Viam slam GRPC server for Cartographer"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/slam.git",
-    tag:      "v0.1.15",
-    revision: "93219aaba54aee295609ddc0a86f3295c70abade"
+    tag:      "v0.1.16",
+    revision: "a1bea0d548f7de63c7194f2080adb0ee0858194b"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/slam.git", branch: "main"
 
