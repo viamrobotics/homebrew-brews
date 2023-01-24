@@ -13,7 +13,7 @@ CUR_VERSION=$(echo "$CHECK" | grep Current | awk '{print $4}')
 NEW_VERSION=$(echo "$CHECK" | grep livecheck | awk '{print $4}')
 
 echo -e "$CHECK"
-
+a
 if [ $CUR_VERSION = $NEW_VERSION ]
 then
 	exit 0
