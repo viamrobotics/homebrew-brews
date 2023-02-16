@@ -7,6 +7,7 @@ class ViamServer < Formula
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   depends_on "go" => :build
+  depends_on "pkg-config" => :build
   depends_on "ffmpeg"
   depends_on "nlopt"
   depends_on "opus"
