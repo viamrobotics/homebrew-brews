@@ -2,8 +2,8 @@ class RplidarModule < Formula
   desc "Viam rplidar modular component"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/rplidar.git",
-    tag:      "v0.1.3",
-    revision: "64ed987a850f7e15fd451239e6c0d85e9daf6675"
+    tag:      "v0.1.4",
+    revision: "0086aed1b00dd9f7b9cb564cfd4665325ad8afec"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/rplidar.git", branch: "main"
 
