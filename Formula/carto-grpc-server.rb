@@ -10,7 +10,7 @@ class CartoGrpcServer < Formula
   depends_on "cmake" => :build
   depends_on "go" => :build
   depends_on "ninja" => :build
-  depends_on "abseil"
+  depends_on "abseil@20220623"
   depends_on "boost"
   depends_on "cairo"
   depends_on "ceres-solver"
