@@ -3,7 +3,7 @@ class CartoGrpcServer < Formula
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/viam-cartographer.git",
     tag:      "v0.1.0",
-    revision: "d22f8b4670a6c444f03945e616da0db07dca1d4a"
+    revision: "56a0388f9e161e85825ac9d222371ac8b225c09e"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/viam-cartographer.git", branch: "main"
 
