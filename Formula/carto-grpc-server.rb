@@ -1,11 +1,11 @@
 class CartoGrpcServer < Formula
   desc "Viam slam GRPC server for Cartographer"
   homepage "https://www.viam.com/"
-  url "https://github.com/viamrobotics/slam.git",
-    tag:      "v0.1.24",
-    revision: "d22f8b4670a6c444f03945e616da0db07dca1d4a"
+  url "https://github.com/viamrobotics/viam-cartographer.git",
+    tag:      "v0.2.0",
+    revision: "956f79194dd81feaad6968692cbda3170fdc7608"
   license "Apache-2.0"
-  head "https://github.com/viamrobotics/slam.git", branch: "main"
+  head "https://github.com/viamrobotics/viam-cartographer.git", branch: "main"
 
   depends_on "cmake" => :build
   depends_on "go" => :build
@@ -27,23 +27,21 @@ class CartoGrpcServer < Formula
   depends_on "suite-sparse"
 
   def install
-    chdir "slam-libraries" do
-      system "make", "buf"
-      system "make", "buildcarto"
+    system "make", "buf"
+    system "make", "build"
 
-      bin.install "viam-cartographer/build/carto_grpc_server"
-      lib.install "viam-cartographer/cartographer/build/libcartographer.a"
-      lib.install "viam-cartographer/build/libviam-cartographer.a"
-      (share/"cartographer/lua_files").mkpath
-      share.install "viam-cartographer/lua_files/locating_in_map.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/lua_files/mapping_new_map.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/lua_files/updating_a_map.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/map_builder.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/pose_graph.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_2d.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/map_builder_server.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder.lua" => "cartographer/lua_files/"
-      share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_3d.lua" => "cartographer/lua_files/"
-    end
+    bin.install "viam-cartographer/build/carto_grpc_server"
+    lib.install "viam-cartographer/cartographer/build/libcartographer.a"
+    lib.install "viam-cartographer/build/libviam-cartographer.a"
+    (share/"cartographer/lua_files").mkpath
+    share.install "viam-cartographer/lua_files/locating_in_map.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/lua_files/mapping_new_map.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/lua_files/updating_a_map.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/cartographer/configuration_files/map_builder.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/cartographer/configuration_files/pose_graph.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_2d.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/cartographer/configuration_files/map_builder_server.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder.lua" => "cartographer/lua_files/"
+    share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_3d.lua" => "cartographer/lua_files/"
   end
 end
