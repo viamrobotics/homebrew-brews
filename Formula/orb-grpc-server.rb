@@ -23,15 +23,15 @@ class OrbGrpcServer < Formula
     system "make", "build"
     if OS.mac?
       system "install_name_tool", "-change",
-builath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/DBoW2/lib/libDBoW2.dylib", "#{lib}/libDBoW2.dylib", "viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib"
+buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/DBoW2/lib/libDBoW2.dylib", "#{lib}/libDBoW2.dylib", "viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib"
       system "install_name_tool", "-change",
-builath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/g2o/lib/libg2o.dylib", "#{lib}/libg2o.dylib", "viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib"
+buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/g2o/lib/libg2o.dylib", "#{lib}/libg2o.dylib", "viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib"
       system "install_name_tool", "-change",
-builath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/DBoW2/lib/libDBoW2.dylib", "#{lib}/libDBoW2.dylib", "viam-orb-slam3/bin/orb_grpc_server"
+buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/DBoW2/lib/libDBoW2.dylib", "#{lib}/libDBoW2.dylib", "viam-orb-slam3/bin/orb_grpc_server"
       system "install_name_tool", "-change",
-builath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/g2o/lib/libg2o.dylib", "#{lib}/libg2o.dylib", "viam-orb-slam3/bin/orb_grpc_server"
+buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty/g2o/lib/libg2o.dylib", "#{lib}/libg2o.dylib", "viam-orb-slam3/bin/orb_grpc_server"
       system "install_name_tool", "-change",
-builath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib", "#{lib}/libORB_SLAM3.dylib", "viam-orb-slam3/bin/orb_grpc_server"
+buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib", "#{lib}/libORB_SLAM3.dylib", "viam-orb-slam3/bin/orb_grpc_server"
     end
     bin.install "viam-orb-slam3/bin/orb_grpc_server"
     lib.install Dir["viam-orb-slam3/ORB_SLAM3/lib/*"]
