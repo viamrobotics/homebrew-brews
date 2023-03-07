@@ -3,6 +3,7 @@ class Pangolin < Formula
   homepage "https://github.com/stevenlovegrove/Pangolin"
   url "https://github.com/stevenlovegrove/Pangolin/archive/refs/tags/v0.8.tar.gz"
   sha256 "a680d1b52cd432f93f3359cb8f2179b25acf384d29dbaa2530b2eb3dfe5a81c6"
+  revision 1
   license "MIT"
   depends_on "catch2" => :build
   depends_on "cmake" => :build
