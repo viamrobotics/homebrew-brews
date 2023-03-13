@@ -8,6 +8,7 @@ class ViamServer < Formula
 
   depends_on "go" => :build
   depends_on "pkg-config" => :build
+  depends_on "node@18" => :build
   depends_on "ffmpeg"
   depends_on "nlopt"
   depends_on "opus"
