@@ -14,7 +14,8 @@ class ViamServer < Formula
   depends_on "opus"
   depends_on "tensorflowlite"
   depends_on "x264"
-
+  depends_on "jpeg-turbo"
+  
   def install
     with_env(
       "TAG_VERSION" => "v#{version}",
