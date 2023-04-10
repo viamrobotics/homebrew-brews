@@ -1,5 +1,5 @@
 class OrbSlam3Module < Formula
-  desc "Viam slam GRPC server for ORB_SLAM3"
+  desc "Viam ORB_SLAM3 modular service"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/viam-orb-slam3.git",
     tag:      "v0.3.1",
