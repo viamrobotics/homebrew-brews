@@ -1,5 +1,5 @@
-class OrbGrpcServer < Formula
-  desc "Viam slam GRPC server for ORB_SLAM3"
+class OrbSlam3Module < Formula
+  desc "Viam ORB_SLAM3 modular service"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/viam-orb-slam3.git",
     tag:      "v0.3.1",
@@ -7,7 +7,7 @@ class OrbGrpcServer < Formula
   license "Apache-2.0"
   head "https://github.com/viamrobotics/viam-orb-slam3.git", branch: "main"
 
-  conflicts_with "orb-slam3-module", because: "orb-slam3-module also installs orb_grpc_server"
+  conflicts_with "orb-grpc-server", because: "orb-grpc-server also installs orb_grpc_server"
 
   depends_on "cmake" => :build
   depends_on "go" => :build
@@ -35,6 +35,7 @@ buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/Thirdparty
       system "install_name_tool", "-change",
 buildpath.to_s.delete_prefix("/private") + "/viam-orb-slam3/ORB_SLAM3/lib/libORB_SLAM3.dylib", "#{lib}/libORB_SLAM3.dylib", "viam-orb-slam3/bin/orb_grpc_server"
     end
+    bin.install "bin/orb-slam3-module"
     bin.install "viam-orb-slam3/bin/orb_grpc_server"
     lib.install Dir["viam-orb-slam3/ORB_SLAM3/lib/*"]
     lib.install Dir["viam-orb-slam3/ORB_SLAM3/Thirdparty/DBoW2/lib/*"]
