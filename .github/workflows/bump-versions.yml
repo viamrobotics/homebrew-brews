@@ -38,6 +38,9 @@ jobs:
     - name: Bump carto-grpc-server
       run: ./bump-version.sh carto-grpc-server
 
+    - name: Bump cartographer-module
+      run: ./bump-version.sh cartographer-module
+
     - name: Bump rplidar-module
       run: ./bump-version.sh rplidar-module
 
