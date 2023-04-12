@@ -7,7 +7,7 @@ class CartoGrpcServer < Formula
   license "Apache-2.0"
   head "https://github.com/viamrobotics/viam-cartographer.git", branch: "main"
 
-  conflicts_with "cartographer-module", because: "cartographer-module does also install carto_grpc_server"
+  conflicts_with "cartographer-module", because: "cartographer-module also installs carto_grpc_server"
 
   depends_on "cmake" => :build
   depends_on "go" => :build
