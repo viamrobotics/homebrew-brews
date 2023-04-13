@@ -1,28 +1,121 @@
 class Tensorflowlite < Formula
-  desc "Tensorflow Lite"
+  desc "Open Source Machine Learning Framework for Everyone"
   homepage "https://tensorflow.org"
-  url "https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.9.1.tar.gz"
-  sha256 "6eaf86ead73e23988fe192da1db68f4d3828bcdd0f3a9dc195935e339c95dbdc"
-  license "APACHE-2.0"
+  url "https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.12.0.tar.gz"
+  sha256 "c030cb1905bff1d2446615992aad8d8d85cbe90c4fb625cee458c63bf466bc8e"
+  license "Apache-2.0"
   head "https://github.com/tensorflow/tensorflow.git", branch: "master"
 
   depends_on "cmake" => :build
 
+  patch :p1, <<~EOP
+    --- a/tensorflow/lite/core/interpreter.cc
+    +++ b/tensorflow/lite/core/interpreter.cc
+    @@ -445,8 +445,10 @@
+     }
+
+     TfLiteStatus Interpreter::ReportTelemetrySettings(const char* setting_name) {
+    +#ifdef TF_LITE_TENSORFLOW_PROFILER
+       telemetry::TelemetryReportSettings(context_, setting_name,
+                                          telemetry_data_.get());
+    +#endif //TFLITE_TENSORFLOW_PROFILER
+       return kTfLiteOk;
+     }
+
+    --- a/tensorflow/lite/core/subgraph.cc
+    +++ b/tensorflow/lite/core/subgraph.cc
+    @@ -1382,7 +1382,9 @@
+
+     TfLiteStatus Subgraph::Invoke() {
+       auto status = InvokeImpl();
+    +#ifdef TF_LITE_TENSORFLOW_PROFILER
+       telemetry::TelemetryReportEvent(&context_, "Invoke", status);
+    +#endif //TFLITE_TENSORFLOW_PROFILER
+       return status;
+     }
+     TfLiteStatus Subgraph::InvokeImpl() {
+    @@ -1966,7 +1968,9 @@
+
+     TfLiteStatus Subgraph::ModifyGraphWithDelegate(TfLiteDelegate* delegate) {
+       auto status = ModifyGraphWithDelegateImpl(delegate);
+    +#ifdef TF_LITE_TENSORFLOW_PROFILER
+       telemetry::TelemetryReportEvent(&context_, "ModifyGraphWithDelegate", status);
+    +#endif //TFLITE_TENSORFLOW_PROFILER
+       return status;
+     }
+
+  EOP
+
   def install
-    inreplace "tensorflow/lite/c/CMakeLists.txt", /common\.c$/, "common.cc"
-    mkdir "builddir"
+    if OS.linux?
+      # Utility needed for static repack
+      (buildpath/"flatten-archives.sh").write <<~EOQ
+        #!/usr/bin/env bash
 
-    system "cmake", "-Bbuilddir", "-Stensorflow/lite/c"
-    system "cmake", "--build", "builddir", "-j16"
+        if [[ $# -lt 2 ]]; then
+        	echo "Usage: $0 out.a in1.a in2.a ... inN.a"
+        	exit 1
+        fi
 
-    lib.install Dir["builddir/libtensorflowlite_c.*"]
+        out_file="$1"
+        shift
+
+        if ! [[ "$out_file" =~ \.a$ ]]; then
+        	echo "$out_file must be an archive (.a) file"
+        	exit 1
+        fi
+
+        mkdir -p `dirname "$out_file"`
+
+        for src in "$@"; do
+        	if ! [[ "$src" =~ \.a$ ]]; then
+        		echo "input $src is not an archive (.a) file"
+        		exit 1
+        	fi
+        	declare -A members
+        	for member in `ar t $src`; do
+        		((members[$member]++))
+        		ar xN ${members[$member]} "$src" "$member"
+        		ar q "$out_file" "$member"
+        		rm "$member"
+        	done
+        	unset members
+        done
+        ranlib $out_file
+      EOQ
+
+      chmod 0755, "flatten-archives.sh"
+
+      # static build
+      mkdir "builddir_static"
+      system "cmake", "-DTFLITE_C_BUILD_SHARED_LIBS=OFF", "-Bbuilddir_static", "-Stensorflow/lite/c"
+      system "cmake", "--build", "builddir_static", "-j8"
+
+      # repack static build into complete archive
+      system "bash", "-c",
+        "find builddir_static/ -name '*.a' -print0 | xargs -0 ./flatten-archives.sh libtensorflowlite_c.a"
+      lib.install "libtensorflowlite_c.a"
+    end
+    # end linux-only static build
+
+    # dynamic build
+    mkdir "builddir_dynamic"
+    system "cmake", "-Bbuilddir_dynamic", "-Stensorflow/lite/c"
+    system "cmake", "--build", "builddir_dynamic", "-j8"
+    lib.install Dir["builddir_dynamic/libtensorflowlite_c.*"]
 
     mkdir_p include/"tensorflow/lite/c"
+    mkdir_p include/"tensorflow/lite/core/c"
+
     include.install "tensorflow/lite/builtin_ops.h" => "tensorflow/lite/builtin_ops.h"
     include.install "tensorflow/lite/c/c_api.h" => "tensorflow/lite/c/c_api.h"
     include.install "tensorflow/lite/c/c_api_experimental.h" => "tensorflow/lite/c/c_api_experimental.h"
     include.install "tensorflow/lite/c/c_api_for_testing.h" => "tensorflow/lite/c/c_api_for_testing.h"
     include.install "tensorflow/lite/c/c_api_types.h" => "tensorflow/lite/c/c_api_types.h"
     include.install "tensorflow/lite/c/common.h" => "tensorflow/lite/c/common.h"
+    include.install "tensorflow/lite/core/c/c_api.h" => "tensorflow/lite/core/c/c_api.h"
+    include.install "tensorflow/lite/core/c/c_api_types.h" => "tensorflow/lite/core/c/c_api_types.h"
+    include.install "tensorflow/lite/core/c/c_api_experimental.h" => "tensorflow/lite/core/c/c_api_experimental.h"
+    include.install "tensorflow/lite/core/c/common.h" => "tensorflow/lite/core/c/common.h"
   end
 end

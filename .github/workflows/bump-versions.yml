@@ -50,6 +50,9 @@ jobs:
     - name: Bump orb-slam3-module
       run: ./bump-version.sh orb-slam3-module
 
+    - name: Bump canon
+      run: ./bump-version.sh canon
+
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:

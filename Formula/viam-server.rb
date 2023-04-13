@@ -10,7 +10,7 @@ class ViamServer < Formula
   depends_on "pkg-config" => :build
   depends_on "node@18" => :build
   depends_on "ffmpeg"
-  depends_on "nlopt"
+  depends_on "nlopt-static"
   depends_on "opus"
   depends_on "tensorflowlite"
   depends_on "x264"
