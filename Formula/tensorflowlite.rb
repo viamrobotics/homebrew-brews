@@ -93,7 +93,7 @@ class Tensorflowlite < Formula
 
       # repack static build into complete archive
       system "bash", "-c",
-        "find builddir_static/ -name '*.a' -print0 | xargs -0 ./flatten-archives.sh libtensorflowlite_c.a"
+        "find builddir_static/_deps -name '*.a' -print0 | xargs -0 ./flatten-archives.sh libtensorflowlite_c.a builddir_static/libtensorflowlite_c.a builddir_static/tensorflow-lite/libtensorflow-lite.a builddir_static/pthreadpool/libpthreadpool.a"
       lib.install "libtensorflowlite_c.a"
     end
     # end linux-only static build
