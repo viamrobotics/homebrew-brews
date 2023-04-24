@@ -7,8 +7,6 @@ class OrbSlam3Module < Formula
   license "Apache-2.0"
   head "https://github.com/viamrobotics/viam-orb-slam3.git", branch: "main"
 
-  conflicts_with "orb-grpc-server", because: "orb-grpc-server also installs orb_grpc_server"
-
   depends_on "cmake" => :build
   depends_on "go" => :build
   depends_on "pkg-config" => :build
