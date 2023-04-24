@@ -35,17 +35,11 @@ jobs:
     - name: Bump viam-server
       run: ./bump-version.sh viam-server
 
-    - name: Bump carto-grpc-server
-      run: ./bump-version.sh carto-grpc-server
-
     - name: Bump cartographer-module
       run: ./bump-version.sh cartographer-module
 
     - name: Bump rplidar-module
       run: ./bump-version.sh rplidar-module
-
-    - name: Bump orb-grpc-server
-      run: ./bump-version.sh orb-grpc-server
 
     - name: Bump orb-slam3-module
       run: ./bump-version.sh orb-slam3-module
