@@ -5,6 +5,7 @@ class ViamServer < Formula
   sha256 "32921b505021897a1275b52e67679a2c2f7d5d3878afb274aa7677219dee5b99"
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
+  revision 1
 
   depends_on "go" => :build
   depends_on "pkg-config" => :build
@@ -24,15 +25,15 @@ class ViamServer < Formula
     end
     if OS.linux?
       if Hardware::CPU.intel?
-        bin.install "bin/Linux-x86_64/server" => "viam-server"
+        bin.install "bin/Linux-x86_64/viam-server" => "viam-server"
       elsif Hardware::CPU.arm?
-        bin.install "bin/Linux-aarch64/server" => "viam-server"
+        bin.install "bin/Linux-aarch64/viam-server" => "viam-server"
       end
     elsif OS.mac?
       if Hardware::CPU.intel?
-        bin.install "bin/Darwin-x86_64/server" => "viam-server"
+        bin.install "bin/Darwin-x86_64/viam-server" => "viam-server"
       elsif Hardware::CPU.arm?
-        bin.install "bin/Darwin-arm64/server" => "viam-server"
+        bin.install "bin/Darwin-arm64/viam-server" => "viam-server"
       end
     end
     etc.install "etc/configs/fake.json" => "viam.json"
