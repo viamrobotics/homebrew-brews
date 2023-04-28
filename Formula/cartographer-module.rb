@@ -10,9 +10,14 @@ class CartographerModule < Formula
   depends_on "cmake" => :build
   depends_on "go" => :build
   depends_on "ninja" => :build
+  depends_on "pkg-config" => :build
   depends_on "protobuf"
   depends_on "grpc"
+  depends_on "googletest"
+  depends_on "ceres-solver"
   depends_on "pcl"
+  depends_on "lua@5.3"
+  depends_on "cairo"
 
   def install
     system "make", "buf"
