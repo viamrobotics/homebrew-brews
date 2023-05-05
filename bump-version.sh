@@ -19,4 +19,10 @@ then
 	exit 0
 fi
 
+# Do not update brew formulas for rc (release candidate) versions.
+if [[ $NEW_VERSION =~ [0-9]+.[0-9]+.[0-9]+-rc[0-9]+ ]]
+then
+	exit 0
+fi
+
 brew bump-formula-pr --write-only --version $NEW_VERSION $FORMULA
