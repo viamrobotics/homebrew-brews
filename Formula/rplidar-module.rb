@@ -9,6 +9,7 @@ class RplidarModule < Formula
 
   depends_on "go" => :build
   depends_on "swig" => :build
+  depends_on "jpeg"
 
   def install
     system "make", "build-module"
