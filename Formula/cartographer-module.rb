@@ -11,7 +11,7 @@ class CartographerModule < Formula
   depends_on "go" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "protobuf"
+  depends_on "protobuf@21"
   depends_on "grpc"
   depends_on "googletest"
   depends_on "ceres-solver"
