@@ -18,6 +18,7 @@ class CartographerModule < Formula
   depends_on "pcl"
   depends_on "lua@5.3"
   depends_on "cairo"
+  depends_on "nlopt-static"
 
   def install
     system "make", "buf"
