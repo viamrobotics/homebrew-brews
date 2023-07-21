@@ -25,7 +25,6 @@ class CartographerModule < Formula
     system "make", "build"
 
     bin.install "bin/cartographer-module"
-    bin.install "viam-cartographer/build/carto_grpc_server"
     (share/"cartographer/lua_files").mkpath
     share.install "viam-cartographer/lua_files/locating_in_map.lua" => "cartographer/lua_files/"
     share.install "viam-cartographer/lua_files/mapping_new_map.lua" => "cartographer/lua_files/"
