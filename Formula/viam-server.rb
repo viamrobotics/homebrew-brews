@@ -1,8 +1,8 @@
 class ViamServer < Formula
   desc "Main server application of the viam robot development kit (RDK)"
   homepage "https://www.viam.com/"
-  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.5.1.tar.gz"
-  sha256 "e16aa8fd5e5d80dd5f3f5e77ec7bbe262c628b5220fa76ef88a583d6dac518de"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.6.0.tar.gz"
+  sha256 "87c38373050b7bfc6f1d6aa6ebd77dfa29dff14ef5411efcf749631c00ee9a4e"
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
