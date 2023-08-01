@@ -47,6 +47,9 @@ jobs:
     - name: Bump canon
       run: ./bump-version.sh canon
 
+    - name: Bump viam-dialdbg
+      run: ./bump-version.sh viam-dialdbg
+
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
