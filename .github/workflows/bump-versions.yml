@@ -50,8 +50,8 @@ jobs:
     - name: Bump viam-dialdbg
       run: ./bump-version.sh viam-dialdbg
 
-    - name: Bump viam-cli
-      run: ./bump-version.sh viam-cli
+    - name: Bump viam
+      run: ./bump-version.sh viam
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4
