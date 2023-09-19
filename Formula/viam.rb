@@ -1,9 +1,8 @@
 class Viam < Formula
-  url "https://github.com/viamrobotics/rdk/archive/f4fe50894438be446d1734a6c86787d36da1e632.tar.gz"
-  sha256 "fbed9f6e2b1bddf1ff435a12d142e07cf6ce55d6f20d73103c217c171daf2599"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.9.1.tar.gz"
+  sha256 "fcc1e791636e10153f84dff10c8c94c72e2f7358f86cf9fa3f8be59d23e80ba5"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
   desc "Viam CLI for managing robots, modules, orgs, etc. on the Viam platform. (See also: viam-server for running a robot)."
-  version "0.8.1a"
 
   depends_on "go" => :build
 
