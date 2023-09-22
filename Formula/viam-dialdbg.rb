@@ -13,4 +13,12 @@ class ViamDialdbg < Formula
     system "make", "build-dialdbg"
     bin.install "target/release/viam-dialdbg"
   end
+
+  def caveats
+    <<~EOS
+      viam-dialdbg may have installed Rust as a dependency via brew. If you
+      manage your own Rust installations (via rustup, etc.), you can run `brew
+      remove rust` or `brew unlink rust` after installing.
+    EOS
+  end
 end
