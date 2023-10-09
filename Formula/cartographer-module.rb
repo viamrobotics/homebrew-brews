@@ -24,7 +24,20 @@ class CartographerModule < Formula
     system "make", "buf"
     system "make", "build"
 
-    bin.install "bin/cartographer-module"
+    if OS.linux?
+      if Hardware::CPU.intel?
+        bin.install "bin/Linux-x86_64/cartographer-module" => "cartographer-module"
+      elsif Hardware::CPU.arm?
+        bin.install "bin/Linux-aarch64/cartographer-module" => "cartographer-module"
+      end
+    elsif OS.mac?
+      if Hardware::CPU.intel?
+        bin.install "bin/Darwin-x86_64/cartographer-module" => "cartographer-module"
+      elsif Hardware::CPU.arm?
+        bin.install "bin/Darwin-arm64/cartographer-module" => "cartographer-module"
+      end
+    end
+    
     (share/"cartographer/lua_files").mkpath
     share.install "viam-cartographer/lua_files/locating_in_map.lua" => "cartographer/lua_files/"
     share.install "viam-cartographer/lua_files/mapping_new_map.lua" => "cartographer/lua_files/"
