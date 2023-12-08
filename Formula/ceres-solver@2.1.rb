@@ -8,8 +8,7 @@ class CeresSolver < Formula
   head "https://ceres-solver.googlesource.com/ceres-solver.git", branch: "master"
 
   livecheck do
-    url "http://ceres-solver.org/installation.html"
-    regex(/href=.*?ceres-solver[._-]v?(\d+(?:\.\d+)+)\.t/i)
+    skip "intentionally held back"
   end
 
   bottle do
