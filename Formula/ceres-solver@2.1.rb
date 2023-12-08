@@ -33,6 +33,7 @@ class CeresSolverAT21 < Formula
                     "-DBUILD_SHARED_LIBS=ON",
                     "-DBUILD_EXAMPLES=OFF",
                     "-DLIB_SUFFIX=''",
+                    "-DCXSPARSE=OFF",
                     *std_cmake_args
     system "cmake", "--build", "homebrew-build"
     system "cmake", "--install", "homebrew-build"
