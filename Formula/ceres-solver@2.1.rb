@@ -22,12 +22,6 @@ class CeresSolverAT21 < Formula
 
   fails_with gcc: "5" # C++17
 
-  # Fix version detection for suite-sparse >= 6.0. Remove in next release.
-  patch do
-    url "https://github.com/ceres-solver/ceres-solver/commit/352b320ab1b5438a0838aea09cbbf07fa4ff5d71.patch?full_index=1"
-    sha256 "0289adbea4cb66ccff57eeb844dd6d6736c37649b6ff329fed73cf0e9461fb53"
-  end
-
   def install
     system "cmake", "-S", ".", "-B", "homebrew-build",
                     "-DBUILD_SHARED_LIBS=ON",
