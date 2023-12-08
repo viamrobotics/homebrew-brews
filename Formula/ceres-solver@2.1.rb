@@ -1,4 +1,4 @@
-class CeresSolver < Formula
+class CeresSolverAT21 < Formula
   desc "C++ library for large-scale optimization"
   homepage "http://ceres-solver.org/"
   url "http://ceres-solver.org/ceres-solver-2.1.0.tar.gz"
