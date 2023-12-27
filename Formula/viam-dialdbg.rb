@@ -2,8 +2,8 @@ class ViamDialdbg < Formula
   desc "Viam dial debugger"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/rust-utils.git",
-    tag:      "v0.1.3",
-    revision: "c8ea8e0ef6bebed27f52625589c63039a82969b0"
+    tag:      "v0.1.4",
+    revision: "4d6c73616859ab62a6b1eb8234069a31964fa800"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/rust-utils.git", branch: "main"
 
