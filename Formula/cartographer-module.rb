@@ -11,14 +11,14 @@ class CartographerModule < Formula
   depends_on "go" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "protobuf@21"
-  depends_on "grpc"
-  depends_on "googletest"
-  depends_on "ceres-solver"
-  depends_on "pcl"
-  depends_on "lua@5.3"
   depends_on "cairo"
+  depends_on "ceres-solver"
+  depends_on "googletest"
+  depends_on "grpc"
+  depends_on "lua@5.3"
   depends_on "nlopt-static"
+  depends_on "pcl"
+  depends_on "protobuf@21"
 
   def install
     system "make", "buf"
@@ -37,7 +37,7 @@ class CartographerModule < Formula
         bin.install "bin/Darwin-arm64/cartographer-module" => "cartographer-module"
       end
     end
-    
+
     (share/"cartographer/lua_files").mkpath
     share.install "viam-cartographer/lua_files/locating_in_map.lua" => "cartographer/lua_files/"
     share.install "viam-cartographer/lua_files/mapping_new_map.lua" => "cartographer/lua_files/"
@@ -48,6 +48,5 @@ class CartographerModule < Formula
     share.install "viam-cartographer/cartographer/configuration_files/map_builder_server.lua" => "cartographer/lua_files/"
     share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder.lua" => "cartographer/lua_files/"
     share.install "viam-cartographer/cartographer/configuration_files/trajectory_builder_3d.lua" => "cartographer/lua_files/"
-
   end
 end

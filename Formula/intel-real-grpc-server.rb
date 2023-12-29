@@ -9,8 +9,8 @@ class IntelRealGrpcServer < Formula
   depends_on "go" => :build
   depends_on "pkg-config" => :build
   depends_on "grpc"
-  depends_on "librealsense"
   depends_on "jpeg-turbo"
+  depends_on "librealsense"
   depends_on "openssl"
 
   def install

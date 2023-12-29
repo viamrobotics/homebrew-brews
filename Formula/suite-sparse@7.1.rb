@@ -16,13 +16,13 @@ class SuiteSparseAT71 < Formula
     skip "intentionally held back"
   end
 
+  keg_only :versioned_formula
+
   depends_on "cmake" => :build
   depends_on "metis"
   depends_on "openblas"
 
   uses_from_macos "m4"
-
-  conflicts_with "mongoose", because: "suite-sparse vendors libmongoose.dylib"
 
   def install
     # Force cmake to use our compiler shims
