@@ -7,15 +7,15 @@ class ViamServer < Formula
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   depends_on "go" => :build
-  depends_on "pkg-config" => :build
   depends_on "node@18" => :build
+  depends_on "pkg-config" => :build
   depends_on "ffmpeg"
+  depends_on "jpeg-turbo"
   depends_on "nlopt-static"
   depends_on "opus"
   depends_on "tensorflowlite"
   depends_on "x264"
-  depends_on "jpeg-turbo"
-  
+
   def install
     with_env(
       "TAG_VERSION" => "v#{version}",
