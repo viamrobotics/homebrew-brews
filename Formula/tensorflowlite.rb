@@ -60,7 +60,7 @@ class Tensorflowlite < Formula
         out_file="$1"
         shift
 
-        if ! [[ "$out_file" =~ .a$ ]]; then
+        if ! [[ "$out_file" =~ \.a$ ]]; then
         	echo "$out_file must be an archive (.a) file"
         	exit 1
         fi
@@ -68,7 +68,7 @@ class Tensorflowlite < Formula
         mkdir -p `dirname "$out_file"`
 
         for src in "$@"; do
-        	if ! [[ "$src" =~ .a$ ]]; then
+        	if ! [[ "$src" =~ \.a$ ]]; then
         		echo "input $src is not an archive (.a) file"
         		exit 1
         	fi
