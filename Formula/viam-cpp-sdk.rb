@@ -8,6 +8,7 @@ class ViamCppSdk < Formula
   head "https://github.com/viamrobotics/viam-cpp-sdk.git", branch: "main"
 
   depends_on "cmake" => :build
+  depends_on "gcc" => :build
   depends_on "abseil"
   depends_on "boost"
   depends_on "grpc"
