@@ -22,7 +22,6 @@ class CartographerModule < Formula
   depends_on "protobuf"
 
   def install
-    system "env"
     ENV["CGO_LDFLAGS"] = " -labsl_log_internal_message -labsl_log_internal_check_op"
     system "make", "build"
 
