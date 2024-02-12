@@ -12,16 +12,18 @@ class CartographerModule < Formula
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "cairo"
-  depends_on "ceres-solver"
+  depends_on "viamrobotics/brews/suite-sparse@7.1"
+  depends_on "viamrobotics/brews/ceres-solver@2.1"
   depends_on "googletest"
   depends_on "grpc"
   depends_on "lua@5.3"
-  depends_on "nlopt-static"
+  depends_on "viamrobotics/brews/nlopt-static"
   depends_on "pcl"
-  depends_on "protobuf@21"
+  depends_on "protobuf"
 
   def install
-    system "make", "buf"
+    system "env"
+    ENV["CGO_LDFLAGS"] = " -labsl_log_internal_message -labsl_log_internal_check_op"
     system "make", "build"
 
     if OS.linux?
