@@ -1,6 +1,6 @@
 name: Bump Versions
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -49,6 +49,9 @@ jobs:
 
     - name: Bump viam-dialdbg
       run: ./bump-version.sh viam-dialdbg
+
+    - name: Bump viam-cpp-sdk
+      run: ./bump-version.sh viam-cpp-sdk
 
     - name: Bump viam
       run: ./bump-version.sh viam
