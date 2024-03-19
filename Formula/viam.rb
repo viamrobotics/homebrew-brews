@@ -1,8 +1,8 @@
 class Viam < Formula
   desc "CLI for managing robots, orgs, etc. (See viam-server for running a robot)"
   homepage "https://docs.viam.com/fleet/cli/"
-  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.22.1.tar.gz"
-  sha256 "c2e42745990b41622919605a0a5f712627f2bc39cc8d93429d147124888c86b7"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.23.0.tar.gz"
+  sha256 "51cc013eaf3dd68e90563a3d57f7c8b804d5efe3bdbe0d98c34a19ef32ab8a8c"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   depends_on "go" => :build
