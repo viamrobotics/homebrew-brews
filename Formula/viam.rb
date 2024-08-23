@@ -6,6 +6,8 @@ class Viam < Formula
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   depends_on "go" => :build
+  depends_on "python3"
+  depends_on "pip3"
 
   def install
     ENV["TAG_VERSION"] = version
