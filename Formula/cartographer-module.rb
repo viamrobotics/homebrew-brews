@@ -2,8 +2,8 @@ class CartographerModule < Formula
   desc "Viam cartographer modular service"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/viam-cartographer.git",
-    tag:      "v0.3.45",
-    revision: "bf57db550f1b8587e8f082982533fa6c53f9c56d"
+    tag:      "v0.3.46",
+    revision: "1ff8c3898d39f66e5515df4a1b1d455540433843"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/viam-cartographer.git", branch: "main"
 
