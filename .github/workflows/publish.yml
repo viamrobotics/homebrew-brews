@@ -18,13 +18,14 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - name: Set up git
-        uses: Homebrew/actions/git-user-config@master
+      - uses: actions/checkout@v4
 
       - name: try bottling
         run: |
           brew install --build-bottle ./Formula/viam.rb
-          brew bottle viam
+          brew bottle viam --write
+          git diff
+          brew pr-upload --dry-run
  
       # - name: Pull bottles
       #   env:
