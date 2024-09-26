@@ -28,9 +28,10 @@ jobs:
         run: |
           # note: this is operating inside the tap on main branch. we're not checking out the repo on-branch.
           brew tap viamrobotics/brews
-          cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
           brew install --build-bottle viam
           brew bottle --json viam
           brew pr-upload --root-url https://ghcr.io/v2/${{ github.repository }}
+          cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
+          git log | head
           git status
           git push
