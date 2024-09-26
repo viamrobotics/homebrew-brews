@@ -23,8 +23,9 @@ jobs:
       - name: try bottling
         run: |
           brew install --build-bottle ./Formula/viam.rb
-          brew bottle viam --write
+          brew bottle viam --json --merge --write
           git diff
+          git log | head
           brew pr-upload --dry-run
  
       # - name: Pull bottles
