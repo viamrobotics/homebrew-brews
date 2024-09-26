@@ -16,6 +16,8 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
+      - uses: actions/checkout@v4
+
       - name: become actions bot
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
