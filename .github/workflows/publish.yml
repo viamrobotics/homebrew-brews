@@ -34,4 +34,5 @@ jobs:
           cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
           git log | head
           git status
+          git config push.autoSetupRemote true
           git push
