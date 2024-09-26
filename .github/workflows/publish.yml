@@ -25,12 +25,12 @@ jobs:
           brew install --build-bottle ./Formula/viam.rb
           echo bottle 1
           brew bottle --json viam
-          echo bottle 2
-          ls
-          brew bottle --merge --write ./viam-*-*.bottle.*.tar.gz
-          git diff
-          git log | head
-          echo pre pr-upload
+          # echo bottle 2
+          # ls
+          # brew bottle --merge --write ./viam-*-*.bottle.*.tar.gz
+          # git diff
+          # git log | head
+          # echo pre pr-upload
           brew pr-upload --dry-run
  
       # - name: Pull bottles
