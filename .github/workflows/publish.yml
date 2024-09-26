@@ -32,7 +32,8 @@ jobs:
           # brew install --build-bottle viamrobotics/brews/viam
           # brew bottle --json viam
           # brew pr-upload # --dry-run
-          brew test-bot viamrobotics/brews/viam
+          brew tap viamrobotics/brews
+          brew test-bot --skip-dependents viam
  
       # - name: Pull bottles
       #   env:
