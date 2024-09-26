@@ -8,12 +8,10 @@ on:
 
 jobs:
   pr-pull:
-    # if: contains(github.event.pull_request.labels.*.name, 'pr-pull')
     runs-on: ubuntu-22.04
-    # permissions:
-      # contents: write
-      # packages: write
-      # pull-requests: write
+    permissions:
+      contents: write
+      packages: write
     steps:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
@@ -30,16 +28,10 @@ jobs:
           HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
           HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
         run: |
-          brew install --build-bottle ./Formula/viam.rb
-          echo bottle 1
+          # this could be ./Formula/viam.rb but that gives you 3-6 warnings at various points
+          brew install --build-bottle viamrobotics/brews/viam
           brew bottle --json viam
-          # echo bottle 2
-          # ls
-          # brew bottle --merge --write ./viam-*-*.bottle.*.tar.gz
-          # git diff
-          # git log | head
-          # echo pre pr-upload
-          brew pr-upload --dry-run
+          brew pr-upload # --dry-run
  
       # - name: Pull bottles
       #   env:
