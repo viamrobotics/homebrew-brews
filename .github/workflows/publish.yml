@@ -27,7 +27,7 @@ jobs:
             HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
         run: |
           # note: this is operating inside the tap on main branch. we're not checking out the repo on-branch.
-          brew tap viamrobotics/brews/viam
+          brew tap viamrobotics/brews
           cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
           brew install --build-bottle viam
           brew bottle --json viam
