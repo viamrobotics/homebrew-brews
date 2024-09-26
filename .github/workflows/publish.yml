@@ -43,7 +43,7 @@ jobs:
 
       - name: Push commits
         run: |
-          cd ~/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/bundle
+          cd $(brew --prefix)/Homebrew/Library/Homebrew/vendor/bundle
           git status
           # git push
 
