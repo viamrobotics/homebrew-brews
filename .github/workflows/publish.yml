@@ -31,7 +31,7 @@ jobs:
           # this could be ./Formula/viam.rb but that gives you 3-6 warnings at various points ... this also warns but less
           brew install --build-bottle viamrobotics/brews/viam
           brew bottle --json viam
-          brew pr-upload --root-url https://ghcr.io/v2/viamrobotics/homebrew-brews # --dry-run
+          brew pr-upload --root-url https://ghcr.io/v2/viamrobotics/homebrew-brews
  
       # - name: Pull bottles
       #   env:
@@ -42,10 +42,11 @@ jobs:
       #   run: brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
 
       - name: Push commits
-        uses: Homebrew/actions/git-try-push@master
-        with:
-          token: ${{ github.token }}
-          branch: main
+        run: |
+          cd ~/linuxbrew/.linuxbrew/Homebrew/Library/Homebrew/vendor/bundle
+          git status
+          # git push
+
 
       # - name: Delete branch
       #   if: github.event.pull_request.head.repo.fork == false
