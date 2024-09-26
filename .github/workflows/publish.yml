@@ -26,6 +26,9 @@ jobs:
           git config --global user.name "actions bot"
 
       - name: try bottling
+        env:
+          HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
+          HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
         run: |
           brew install --build-bottle ./Formula/viam.rb
           echo bottle 1
