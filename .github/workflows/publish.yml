@@ -29,9 +29,10 @@ jobs:
           HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
         run: |
           # this could be ./Formula/viam.rb but that gives you 3-6 warnings at various points
-          brew install --build-bottle viamrobotics/brews/viam
-          brew bottle --json viam
-          brew pr-upload # --dry-run
+          # brew install --build-bottle viamrobotics/brews/viam
+          # brew bottle --json viam
+          # brew pr-upload # --dry-run
+          brew test-bot viamrobotics/brews/viam
  
       # - name: Pull bottles
       #   env:
