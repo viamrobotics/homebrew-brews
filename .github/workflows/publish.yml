@@ -36,7 +36,7 @@ jobs:
           brew pr-upload --root-url https://ghcr.io/v2/${{ github.repository }}
 
       - name: push changes
-        run: |          
+        run: |
           cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
           # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
           # this will be run from main so this isn't a deal-breaker.
