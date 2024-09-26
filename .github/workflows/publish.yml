@@ -24,7 +24,7 @@ jobs:
         run: |
           brew install --build-bottle ./Formula/viam.rb
           brew bottle --json viam
-          brew bottle --merge --write
+          brew bottle --merge --write viam
           git diff
           git log | head
           brew pr-upload --dry-run
