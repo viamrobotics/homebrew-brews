@@ -1,15 +1,25 @@
-name: brew pr-pull
+name: brew bottle
 
 on:
+  workflow_call:
+    inputs:
+      formula:
+        type: string
+        default: viam
+        description: which formula to bottle
   workflow_dispatch:
     inputs:
-      runner:
-        default: ubuntu-22.04
-        description: passed down to runs-on
+      formula:
+        type: string
+        default: viam
+        description: which formula to bottle
 
 jobs:
-  pr-pull:
-    runs-on: ${{ inputs.runner }}
+  bottle:
+    strategy:
+      matrix:
+        runs-on: [ubuntu-22.04]
+    runs-on: ${{ matrix.runs-on }}
     permissions:
       contents: write
       packages: write
@@ -33,8 +43,8 @@ jobs:
             ROOT_URL: https://ghcr.io/v2/${{ github.repository }}
         run: |
           brew tap viamrobotics/brews
-          brew install --build-bottle viam
-          brew bottle --json --root-url $ROOT_URL viam
+          brew install --build-bottle ${{ inputs.formula }}
+          brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
           brew pr-upload --root-url $ROOT_URL
 
       - name: push changes

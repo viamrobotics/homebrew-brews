@@ -17,6 +17,8 @@ jobs:
       image: homebrew/brew
       options: --user root
     timeout-minutes: 10
+    outputs:
+      bump-viam: ${{ steps.viam.outputs.bump }}
     steps:
     - name: Check out code
       uses: actions/checkout@v3
@@ -54,9 +56,19 @@ jobs:
       run: ./bump-version.sh viam-cpp-sdk
 
     - name: Bump viam
-      run: ./bump-version.sh viam
+      id: viam
+      run: |
+        echo bump=$(./needs-bump.sh) >> "$GITHUB_OUTPUT"
+        ./bump-version.sh viam
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Auto-update of package versions
+
+  bottle-viam:
+    needs: bump-versions
+    if: needs.bump-versions.outputs.bump-viam == 'true'
+    uses: ./.github/workflows/bottle.yml
+    with:
+      formula: viam
