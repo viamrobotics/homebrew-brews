@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 10
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
     steps:
     - name: Check out code
       uses: actions/checkout@v3
