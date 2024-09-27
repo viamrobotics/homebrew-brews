@@ -29,11 +29,13 @@ jobs:
         env:
             HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
             HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
+            # if you don't override root-url it will upload to / download from the wrong place
+            ROOT_URL: https://ghcr.io/v2/${{ github.repository }}
         run: |
           brew tap viamrobotics/brews
           brew install --build-bottle viam
-          brew bottle --json viam
-          brew pr-upload --root-url https://ghcr.io/v2/${{ github.repository }}
+          brew bottle --json --root-url $ROOT_URL viam
+          brew pr-upload --root-url $ROOT_URL
 
       - name: push changes
         run: |
