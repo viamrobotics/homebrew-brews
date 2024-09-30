@@ -18,7 +18,8 @@ jobs:
   bottle:
     strategy:
       matrix:
-        runs-on: [ubuntu-22.04]
+        # macos-14 is apple silicon
+        runs-on: [ubuntu-22.04, macos-14]
     runs-on: ${{ matrix.runs-on }}
     permissions:
       contents: write
