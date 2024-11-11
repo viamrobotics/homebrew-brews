@@ -16,9 +16,6 @@ on:
 
 jobs:
   bottle:
-    concurrency:
-      # these make git commits and will fail if they overlap at all
-      group: bottle-mutex
     strategy:
       matrix:
         # macos-14 is apple silicon
