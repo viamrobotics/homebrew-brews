@@ -48,10 +48,15 @@ jobs:
         run: |
           brew tap viamrobotics/brews
           brew install --build-bottle ${{ inputs.formula }}
+          echo PRE
+          ls
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
-          brew pr-upload --root-url $ROOT_URL
+          echo POST
+          ls
+          # brew pr-upload --root-url $ROOT_URL # tmp disable
 
       - name: push changes
+        if: false # tmp disable
         run: |
           cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
           # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
