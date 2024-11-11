@@ -56,7 +56,7 @@ jobs:
           git status
           # brew pr-upload --root-url $ROOT_URL # tmp disable
           find $(brew --prefix) | grep -i taps.viamrobotics
-          cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
+          cd $(brew --prefix)/Library/Taps/${{ github.repository }}
           git status
 
       - name: push changes
