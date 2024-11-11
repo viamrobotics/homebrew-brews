@@ -64,9 +64,12 @@ jobs:
     - name: download artifacts
       run: |
         brew tap viamrobotics/brews
-        for artifact in "ubuntu-22.04 macos-14"; do
-          echo artifact
-        done
+        ls
+        gh run download ${{ github.run_id }}
+        ls
+        ls macos-14
+        mv */*.bottle.* .
+        ls
 
     - name: push changes
       if: false # tmp disable
