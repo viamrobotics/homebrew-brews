@@ -62,6 +62,8 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: download artifacts
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         brew tap viamrobotics/brews
         ls
