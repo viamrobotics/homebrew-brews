@@ -52,7 +52,8 @@ jobs:
           ls
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
           echo POST
-          ls
+          ls *.bottle.*
+          git status
           # brew pr-upload --root-url $ROOT_URL # tmp disable
 
       - name: push changes
