@@ -24,14 +24,9 @@ jobs:
         # macos-14 is apple silicon
         runs-on: [ubuntu-22.04, macos-14]
     runs-on: ${{ matrix.runs-on }}
-    permissions:
-      contents: write
-      packages: write
     steps:
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      # - uses: actions/checkout@v4
+      - uses: Homebrew/actions/setup-homebrew@master
+      - uses: actions/checkout@v4
 
       - name: git setup
         run: |
@@ -48,23 +43,36 @@ jobs:
         run: |
           brew tap viamrobotics/brews
           brew install --build-bottle ${{ inputs.formula }}
-          echo PRE
-          ls
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
-          echo POST
-          ls *.bottle.*
-          git status
-          # brew pr-upload --root-url $ROOT_URL # tmp disable
-          find $(brew --prefix) | grep -i taps.viamrobotics
-          cd $(brew --prefix)/Library/Taps/${{ github.repository }}
-          git status
 
-      - name: push changes
-        if: false # tmp disable
-        run: |
-          cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
-          # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
-          # this will be run from main so this isn't a deal-breaker.
-          git log | head
-          git status
-          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.runs-on }}
+          if-no-files-found: error
+          path: '*.bottle.*'
+
+  upload:
+    needs: bottle
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+    - uses: Homebrew/actions/setup-homebrew@master
+    - uses: actions/checkout@v4
+
+    - name: download artifacts
+      run: |
+        brew tap viamrobotics/brews
+        for artifact in "ubuntu-22.04 macos-14"; do
+          echo artifact
+        done
+
+    - name: push changes
+      if: false # tmp disable
+      run: |
+        cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
+        # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
+        git log | head
+        git status
+        git push
