@@ -31,7 +31,7 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - uses: actions/checkout@v4
+      # - uses: actions/checkout@v4
 
       - name: git setup
         run: |
