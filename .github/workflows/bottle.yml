@@ -34,7 +34,7 @@ jobs:
           git config --global user.name "actions bot"
           git config push.autoSetupRemote true
 
-      - name: build and push bottle
+      - name: build bottle
         run: |
           brew tap viamrobotics/brews
           brew install --build-bottle ${{ inputs.formula }}
