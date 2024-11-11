@@ -14,19 +14,18 @@ on:
         default: viam
         description: which formula to bottle
 
+env:
+  # if you don't override root-url it will upload to / download from the wrong place
+  ROOT_URL: https://ghcr.io/v2/${{ github.repository }}
+
 jobs:
   bottle:
     strategy:
       matrix:
-        runs-on: [ubuntu-22.04]
+        runs-on: [ubuntu-22.04, macos-14, macos-15]
     runs-on: ${{ matrix.runs-on }}
-    permissions:
-      contents: write
-      packages: write
     steps:
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
+      - uses: Homebrew/actions/setup-homebrew@master
       - uses: actions/checkout@v4
 
       - name: git setup
@@ -35,23 +34,53 @@ jobs:
           git config --global user.name "actions bot"
           git config push.autoSetupRemote true
 
-      - name: build and push bottle
-        env:
-            HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
-            HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
-            # if you don't override root-url it will upload to / download from the wrong place
-            ROOT_URL: https://ghcr.io/v2/${{ github.repository }}
+      - name: build bottle
         run: |
           brew tap viamrobotics/brews
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
-          brew pr-upload --root-url $ROOT_URL
 
-      - name: push changes
-        run: |
-          cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
-          # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
-          # this will be run from main so this isn't a deal-breaker.
-          git log | head
-          git status
-          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.runs-on }}
+          if-no-files-found: error
+          path: '*.bottle.*'
+
+  upload:
+    needs: bottle
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+    - uses: Homebrew/actions/setup-homebrew@master
+    - uses: actions/checkout@v4
+
+    - name: git setup
+      run: |
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "actions bot"
+        git config push.autoSetupRemote true
+
+    - name: download artifacts
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        brew tap viamrobotics/brews
+        gh run download ${{ github.run_id }}
+        mv */*.bottle.* .
+        ls
+
+    - name: upload
+      env:
+        HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
+        HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
+      run: brew pr-upload --root-url $ROOT_URL
+
+    - name: push changes
+      run: |
+        cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
+        # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
+        git log | head
+        git status
+        git push
