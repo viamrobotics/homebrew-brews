@@ -60,7 +60,7 @@ jobs:
     - name: Bump viam
       id: viam
       run: |
-        echo bump=$(./needs-bump.sh) >> "$GITHUB_OUTPUT"
+        echo bump=$(./needs-bump.sh viam) >> "$GITHUB_OUTPUT"
         ./bump-version.sh viam
 
     - name: Commit changes
