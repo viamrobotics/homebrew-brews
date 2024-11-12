@@ -74,3 +74,5 @@ jobs:
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}

@@ -7,6 +7,9 @@ on:
         type: string
         default: viam
         description: which formula to bottle
+    secrets:
+      GIT_ACCESS_TOKEN:
+        required: true
   workflow_dispatch:
     inputs:
       formula:
@@ -27,12 +30,8 @@ jobs:
     steps:
       - uses: Homebrew/actions/setup-homebrew@master
       - uses: actions/checkout@v4
-
-      - name: git setup
-        run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "actions bot"
-          git config push.autoSetupRemote true
+        with:
+          token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
       - name: build bottle
         run: |
@@ -55,12 +54,8 @@ jobs:
     steps:
     - uses: Homebrew/actions/setup-homebrew@master
     - uses: actions/checkout@v4
-
-    - name: git setup
-      run: |
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "actions bot"
-        git config push.autoSetupRemote true
+      with:
+        token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
     - name: download artifacts
       env:
