@@ -13,7 +13,6 @@ class ViamServer < Formula
   depends_on "jpeg-turbo"
   depends_on "nlopt-static"
   depends_on "opus"
-  depends_on "tensorflowlite"
   depends_on "x264"
 
   def install
