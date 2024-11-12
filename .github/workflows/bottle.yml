@@ -34,6 +34,8 @@ jobs:
       - name: build bottle
         run: |
           brew tap viamrobotics/brews
+          # note: this fails on the nlopt dep to viam-server when viam-server already exists as bottle in the formula file.
+          # weird edge case. recovery is to remove the bottle stanza and delete the uploaded package, then rerun.
           brew install --only-dependencies ${{ inputs.formula }}
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
