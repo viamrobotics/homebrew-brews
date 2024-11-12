@@ -34,6 +34,7 @@ jobs:
       - name: build bottle
         run: |
           brew tap viamrobotics/brews
+          brew install --only-dependencies ${{ inputs.formula }}
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
 
