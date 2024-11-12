@@ -6,6 +6,14 @@ class ViamServer < Formula
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
+  bottle do
+    root_url "https://ghcr.io/v2/viamrobotics/brews"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "ef330423b8a46c0af3f76da19f2f27030164c928f0435cfc120a494667c862f9"
+    sha256 cellar: :any,                 arm64_sonoma:  "44bcbe54b0ab5deb67ae073753abe421e4c72d81398e8309f086bd3bf23266f8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "12fe387b614ca2c742a159f5d4c150c208a23a1b14af0dfab8c82c9a854ffa00"
+  end
+
   depends_on "go" => :build
   depends_on "node@20" => :build
   depends_on "pkg-config" => :build
