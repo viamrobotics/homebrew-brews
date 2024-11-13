@@ -34,6 +34,9 @@ jobs:
       - name: build bottle
         run: |
           brew tap viamrobotics/brews
+          # note: this fails on the nlopt dep to viam-server when viam-server already exists as bottle in the formula file.
+          # weird edge case. recovery is to remove the bottle stanza and delete the uploaded package, then rerun.
+          brew install --only-dependencies ${{ inputs.formula }}
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
 
@@ -60,6 +63,11 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global user.name "actions bot"
         git config push.autoSetupRemote true
+        git branch
+        # why pull: for the case where we are bottling two formulae, formula 1 will push a new commit.
+        # Then formula 2's bottle job will check out the original commit, try to push, and collid with
+        # formula 1's commit.
+        git pull
 
     - name: download artifacts
       env:

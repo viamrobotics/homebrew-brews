@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 10
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
+      bump-viam-server: ${{ steps.viam-server.outputs.bump }}
     env:
       HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
     steps:
@@ -37,7 +38,10 @@ jobs:
         brew developer on
 
     - name: Bump viam-server
-      run: ./bump-version.sh viam-server
+      id: viam-server
+      run: |
+        echo bump=$(./needs-bump.sh viam-server) >> "$GITHUB_OUTPUT"
+        ./bump-version.sh viam-server
 
     - name: Bump cartographer-module
       run: ./bump-version.sh cartographer-module
@@ -70,9 +74,22 @@ jobs:
 
   bottle-viam:
     needs: bump-versions
+    concurrency:
+      group: ${{ github.ref }}-bottle
     if: needs.bump-versions.outputs.bump-viam == 'true'
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  bottle-viam-server:
+    needs: bump-versions
+    concurrency:
+      group: ${{ github.ref }}-bottle
+    if: needs.bump-versions.outputs.bump-viam-server == 'true'
+    uses: ./.github/workflows/bottle.yml
+    with:
+      formula: viam-server
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
