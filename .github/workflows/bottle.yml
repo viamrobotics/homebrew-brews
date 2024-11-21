@@ -30,6 +30,10 @@ jobs:
     steps:
       - uses: Homebrew/actions/setup-homebrew@master
       - uses: actions/checkout@v4
+      - name: pull
+        run: |
+          # see note below on why we need to pull
+          git pull
 
       - name: build bottle
         run: |
