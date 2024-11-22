@@ -43,10 +43,10 @@ jobs:
           brew install --only-dependencies ${{ inputs.formula }}
 
           # without this install+link step, the job fails on CI runners
-          brew install pkgconf
-          brew link --overwrite pkgconf
+          # brew install pkgconf
+          # brew link --overwrite pkgconf
 
-          brew install --build-bottle ${{ inputs.formula }}
+          brew install --overwrite --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
 
       - uses: actions/upload-artifact@v4
