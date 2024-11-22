@@ -40,8 +40,9 @@ jobs:
           brew tap viamrobotics/brews
           # note: this fails on the nlopt dep to viam-server when viam-server already exists as bottle in the formula file.
           # weird edge case. recovery is to remove the bottle stanza and delete the uploaded package, then rerun.
-          # without --force, build fails on macos 15 runner with brew link error
-          brew install --force --only-dependencies ${{ inputs.formula }}
+          brew install --only-dependencies ${{ inputs.formula }}
+          # without this link step this fails on macos-15 runner
+          brew link --overwrite pkgconf
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
 
