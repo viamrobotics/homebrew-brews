@@ -37,16 +37,13 @@ jobs:
 
       - name: build bottle
         run: |
+          # without this force-install, the pkgconf dep of viam-server conflicts with the one github preinstalls on runners, and the build fails
           brew install --force --overwrite pkg-config
+
           brew tap viamrobotics/brews
           # note: this fails on the nlopt dep to viam-server when viam-server already exists as bottle in the formula file.
           # weird edge case. recovery is to remove the bottle stanza and delete the uploaded package, then rerun.
           brew install --only-dependencies ${{ inputs.formula }}
-
-          # without this install+link step, the job fails on CI runners
-          # brew install pkgconf
-          # brew link --overwrite pkgconf
-
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
 
