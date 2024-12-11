@@ -1,8 +1,8 @@
 class Canon < Formula
   desc "CLI utility for managing docker-based, canonical development environments"
   homepage "https://github.com/viamrobotics/canon"
-  url "https://github.com/viamrobotics/canon/archive/refs/tags/v1.1.2.tar.gz"
-  sha256 "bf58d898169320092359fc0babfdfe26a876dbf8f7b926a78c22c2a33dbca9a6"
+  url "https://github.com/viamrobotics/canon/archive/refs/tags/v1.2.0.tar.gz"
+  sha256 "3c18bc0673c8c271837ec33bc7adc4144a16763ffdc413919f1f08112807c102"
   head "https://github.com/viamrobotics/canon.git", branch: "main"
 
   depends_on "go" => :build
