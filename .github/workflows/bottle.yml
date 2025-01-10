@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.runs-on }}-${{ github.run_id }}
+          name: ${{ matrix.runs-on }}
           if-no-files-found: error
           path: '*.bottle.*'
 
@@ -89,12 +89,13 @@ jobs:
       env:
         HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
         HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
-      run: brew pr-upload --root-url $ROOT_URL
+      run: |
+        # brew pr-upload --root-url $ROOT_URL
 
     - name: push changes
       run: |
-        cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
+        # cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
         # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
-        git log | head
-        git status
-        git push
+        # git log | head
+        # git status
+        # git push
