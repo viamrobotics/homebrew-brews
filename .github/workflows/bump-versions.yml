@@ -74,9 +74,10 @@ jobs:
 
   bottle-viam:
     needs: bump-versions
-    concurrency:
-      group: ${{ github.ref }}-bottle
-    if: needs.bump-versions.outputs.bump-viam == 'true'
+    # concurrency:
+    #   group: ${{ github.ref }}-bottle
+    # if: needs.bump-versions.outputs.bump-viam == 'true'
+    if: true
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam
@@ -85,11 +86,11 @@ jobs:
 
   bottle-viam-server:
     # toggle off for now until artifact name collision is fixed
-    if: false
+    if: true
     # if: needs.bump-versions.outputs.bump-viam-server == 'true'
     needs: bump-versions
-    concurrency:
-      group: ${{ github.ref }}-bottle
+    # concurrency:
+    #   group: ${{ github.ref }}-bottle
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam-server
