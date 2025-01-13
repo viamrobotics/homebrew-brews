@@ -93,8 +93,7 @@ jobs:
       env:
         HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
         HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ github.token }}
-      run: |
-        brew pr-upload --root-url $ROOT_URL
+      run: brew pr-upload --root-url $ROOT_URL
 
     - name: push changes
       run: |
