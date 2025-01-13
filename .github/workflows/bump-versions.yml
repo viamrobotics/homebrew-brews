@@ -84,9 +84,7 @@ jobs:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
   bottle-viam-server:
-    # toggle off for now until artifact name collision is fixed
-    if: false
-    # if: needs.bump-versions.outputs.bump-viam-server == 'true'
+    if: needs.bump-versions.outputs.bump-viam-server == 'true'
     needs: bump-versions
     concurrency:
       group: ${{ github.ref }}-bottle

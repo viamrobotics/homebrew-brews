@@ -46,10 +46,14 @@ jobs:
           brew install --only-dependencies ${{ inputs.formula }}
           brew install --build-bottle ${{ inputs.formula }}
           brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
-
+      
+      - name: Generate UUID
+        id: uuid_step
+        run: echo "::set-output name=uuid::$(uuidgen)"
+  
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.runs-on }}
+          name: ${{ matrix.runs-on }}-${{ steps.uuid_step.outputs.uuid }}
           if-no-files-found: error
           path: '*.bottle.*'
 
