@@ -93,3 +93,12 @@ jobs:
       formula: viam-server
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  upload:
+    needs: [bottle-viam, bottle-viam-server]
+    if: |
+      needs.bottle-viam.result == 'success' || 
+      needs.bottle-viam-server.result == 'success'
+    uses: ./.github/workflows/upload.yml
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
