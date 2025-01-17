@@ -1,0 +1,24 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  bottle-viam:
+    uses: ./.github/workflows/bottle.yml
+    with:
+      formula: viam
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  bottle-viam-server:
+    uses: ./.github/workflows/bottle.yml
+    with:
+      formula: viam-server
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  upload:
+    needs: [bottle-viam, bottle-viam-server]
+    uses: ./.github/workflows/upload.yml
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
