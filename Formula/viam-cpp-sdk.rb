@@ -19,7 +19,7 @@ class ViamCppSdk < Formula
   depends_on "buf"
 
   def install
-    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    system "cmake", "-S", ".", "-B", "build", "-DFETCHCONTENT_FULLY_DISCONNECTED=ON", "-DHOMEBREW_ALLOW_FETCHCONTENT=ON", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end
