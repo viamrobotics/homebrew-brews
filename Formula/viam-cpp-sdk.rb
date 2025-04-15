@@ -2,8 +2,8 @@ class ViamCppSdk < Formula
   desc "Viam C++ SDK"
   homepage "https://www.viam.com/"
   url "https://github.com/viamrobotics/viam-cpp-sdk.git",
-    tag:      "releases/v0.8.0",
-    revision: "f964f9c814ff23e8dcf7febdef9544ec1da85de0"
+    tag:      "releases/v0.9.0",
+    revision: "36a1fa1dc01ec698fc99107a80e198a331cf757d"
   license "Apache-2.0"
   head "https://github.com/viamrobotics/viam-cpp-sdk.git", branch: "main"
 
