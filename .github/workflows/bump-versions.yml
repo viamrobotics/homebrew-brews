@@ -20,6 +20,9 @@ jobs:
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
       bump-viam-server: ${{ steps.viam-server.outputs.bump }}
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+      HOMEBREW_NO_AUTO_UPDATE: '1'
     steps:
     - name: Check out code
       uses: actions/checkout@v3
