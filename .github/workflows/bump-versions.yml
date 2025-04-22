@@ -20,6 +20,8 @@ jobs:
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
       bump-viam-server: ${{ steps.viam-server.outputs.bump }}
+    permissions:
+      contents: write
     env:
       HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
     steps:
