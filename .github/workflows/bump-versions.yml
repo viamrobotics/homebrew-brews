@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: homebrew/brew
-      options: --user root
+      # options: --user root
     timeout-minutes: 10
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
