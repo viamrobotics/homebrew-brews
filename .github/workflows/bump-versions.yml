@@ -13,7 +13,9 @@ jobs:
   bump-action:
     runs-on: ubuntu-latest
     steps:
+    - uses: Homebrew/actions/setup-homebrew@bc624b9b4073985ee647eba2507305b15c9404ce
     - uses: homebrew/actions/bump-packages@bc624b9b4073985ee647eba2507305b15c9404ce
+      id: bump
       with:
         token: ${{ github.token }}
         formulae: >
