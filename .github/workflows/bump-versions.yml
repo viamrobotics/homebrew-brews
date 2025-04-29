@@ -24,7 +24,7 @@ jobs:
       HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
     steps:
     - name: cd
-      run: cd
+      run: cd $HOME
     - name: Check out code
       uses: actions/checkout@v3
       with:
