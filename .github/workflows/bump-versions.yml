@@ -10,20 +10,99 @@ on:
   workflow_dispatch:
 
 jobs:
-  bump-action:
-    runs-on: ubuntu-latest
+  bump-versions:
+    name: Bump Package Versions
+    runs-on: ubuntu-22.04
+    container:
+      image: homebrew/brew
+      options: --user root
+    timeout-minutes: 10
+    outputs:
+      bump-viam: ${{ steps.viam.outputs.bump }}
+      bump-viam-server: ${{ steps.viam-server.outputs.bump }}
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+      # HOMEBREW_NO_AUTO_UPDATE: '1'
+      # HOMEBREW_NO_INSTALL_FROM_API: '1'
     steps:
-    - uses: Homebrew/actions/setup-homebrew@bc624b9b4073985ee647eba2507305b15c9404ce
-    - uses: homebrew/actions/bump-packages@bc624b9b4073985ee647eba2507305b15c9404ce
-      id: bump
+    # - name: cd
+    #   run: cd ~linuxbrew
+    - name: Check out code
+      uses: actions/checkout@v3
       with:
-        token: ${{ github.token }}
-        formulae: >
-          viam-server
-          cartographer-module
-          rplidar-module
-          orb-slam3-module
-          canon
-          viam-dialdbg
-          viam-cpp-sdk
-        fork: false
+        ref: ${{ github.head_ref }}
+        token: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+    - name: Setup homebrew and git config
+      run: |
+        mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics
+        ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics/homebrew-brews
+        git config --global --add safe.directory '*'
+        git config --global url."https://github.com/".insteadOf git@github.com:
+        brew developer on
+
+    - name: Bump viam-server
+      id: viam-server
+      run: |
+        echo bump=$(./needs-bump.sh viam-server) >> "$GITHUB_OUTPUT"
+        ./bump-version.sh viam-server
+
+    - name: Bump cartographer-module
+      run: ./bump-version.sh cartographer-module
+
+    - name: Bump rplidar-module
+      run: ./bump-version.sh rplidar-module
+
+    - name: Bump orb-slam3-module
+      run: ./bump-version.sh orb-slam3-module
+
+    - name: Bump canon
+      run: ./bump-version.sh canon
+
+    - name: Bump viam-dialdbg
+      run: ./bump-version.sh viam-dialdbg
+
+    - name: Bump viam-cpp-sdk
+      run: ./bump-version.sh viam-cpp-sdk
+
+    - name: Bump viam
+      id: viam
+      run: |
+        echo bump=$(./needs-bump.sh viam) >> "$GITHUB_OUTPUT"
+        ./bump-version.sh viam
+
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Auto-update of package versions
+
+  bottle-viam:
+    needs: bump-versions
+    concurrency:
+      group: ${{ github.ref }}-bottle
+    if: needs.bump-versions.outputs.bump-viam == 'true'
+    uses: ./.github/workflows/bottle.yml
+    with:
+      formula: viam
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  bottle-viam-server:
+    if: needs.bump-versions.outputs.bump-viam-server == 'true'
+    needs: bump-versions
+    concurrency:
+      group: ${{ github.ref }}-bottle
+    uses: ./.github/workflows/bottle.yml
+    with:
+      formula: viam-server
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  upload:
+    needs: [bottle-viam, bottle-viam-server]
+    if: |
+      needs.bottle-viam.result == 'success' || 
+      needs.bottle-viam-server.result == 'success'
+    uses: ./.github/workflows/upload.yml
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
