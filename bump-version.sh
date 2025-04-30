@@ -19,4 +19,4 @@ then
 	exit 0
 fi
 
-brew bump-formula-pr --write-only --version $NEW_VERSION --no-fork $FORMULA
+brew bump-formula-pr --write-only --version $NEW_VERSION --no-fork --no-audit $FORMULA
