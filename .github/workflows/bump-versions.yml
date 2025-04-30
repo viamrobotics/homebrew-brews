@@ -32,7 +32,7 @@ jobs:
         token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
     - name: Setup homebrew and git config
-      run: ./fake-tap.sh
+      run: brew tap viamrobotics/brews
 
     - name: Bump viam-server
       id: viam-server
