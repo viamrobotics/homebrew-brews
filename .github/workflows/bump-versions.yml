@@ -35,8 +35,8 @@ jobs:
 
     - name: Setup homebrew and git config
       run: |
-        brew --version
         ./fake-tap.sh
+        brew --version
 
     - name: Bump viam-server
       id: viam-server
