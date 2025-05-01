@@ -20,4 +20,4 @@ then
 fi
 
 # note: --write-only flag here means that it doesn't open a PR
-brew bump-formula-pr --write-only --version $NEW_VERSION --no-fork --no-audit $FORMULA
+brew bump-formula-pr --write-only --version $NEW_VERSION $FORMULA
