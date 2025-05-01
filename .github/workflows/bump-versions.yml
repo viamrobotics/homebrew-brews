@@ -12,7 +12,7 @@ on:
 jobs:
   bump-versions:
     name: Bump Package Versions
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container:
       # pinning because --write-only flag seems broken on newer, need to investigate
       image: homebrew/brew@sha256:1e8baee8fa03a31726d50ec5d77635991c3f22d045a3e450e8dcedcb63161bc3
