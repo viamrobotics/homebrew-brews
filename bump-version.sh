@@ -19,4 +19,5 @@ then
 	exit 0
 fi
 
+# note: --write-only flag here means that it doesn't open a PR
 brew bump-formula-pr --write-only --version $NEW_VERSION $FORMULA

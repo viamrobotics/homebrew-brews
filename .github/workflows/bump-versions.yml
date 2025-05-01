@@ -14,14 +14,18 @@ jobs:
     name: Bump Package Versions
     runs-on: ubuntu-latest
     container:
-      image: homebrew/brew
-      # options: --user root
+      # pinning because --write-only flag seems broken on newer, need to investigate
+      image: homebrew/brew@sha256:1e8baee8fa03a31726d50ec5d77635991c3f22d045a3e450e8dcedcb63161bc3
+      options: --user root
     timeout-minutes: 10
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
       bump-viam-server: ${{ steps.viam-server.outputs.bump }}
     env:
       HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+      # these no-update flags are to prevent us from (defeats the purpose of pinning)
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      HOMEBREW_NO_INSTALL_FROM_API: '1'
     steps:
     - name: Check out code
       uses: actions/checkout@v3
@@ -31,11 +35,8 @@ jobs:
 
     - name: Setup homebrew and git config
       run: |
-        mkdir /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics
-        ln -s $(pwd) /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/viamrobotics/homebrew-brews
-        git config --global --add safe.directory '*'
-        git config --global url."https://github.com/".insteadOf git@github.com:
-        brew developer on
+        ./fake-tap.sh
+        brew --version
 
     - name: Bump viam-server
       id: viam-server

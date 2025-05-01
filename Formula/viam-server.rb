@@ -1,17 +1,16 @@
 class ViamServer < Formula
   desc "Main server application of the viam robot development kit (RDK)"
   homepage "https://www.viam.com/"
-  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.72.1.tar.gz"
-  sha256 "559c20b6ba7ab5cf7bf2ae3d9b0ac46739c8ff889d1967f2a4a03fb7eceefb0a"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.73.1.tar.gz"
+  sha256 "57c409bbdfa0fa5269f6c4b318c0e8c21a5ebff836a207f0e1f7c23553467e93"
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   bottle do
     root_url "https://ghcr.io/v2/viamrobotics/brews"
-    rebuild 33
-    sha256 cellar: :any,                 arm64_sequoia: "800ec8fdf176f055071a258838393bada2587838770d8aaebb3ea2551393e7a5"
-    sha256 cellar: :any,                 arm64_sonoma:  "f96318fa3763c6627214a83cc43a3c0691e90ccb2754d0bca10f17ea4c289486"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "97d6026517adb858743318a399dc09e2a53e14ef512f5f826fc1a7cfd6c04758"
+    sha256 cellar: :any,                 arm64_sequoia: "9ae8a679e37d26ebc8fed3c74ce4c1e7da11a60c152c084afa0aa2735cdac356"
+    sha256 cellar: :any,                 arm64_sonoma:  "3637ae1c765598a2147c326f2a2ff5e3280035fb2c317b8f9bea9aa291e76c6b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bb87391e3aa14cc9a0ccc3bd0930e1a12f89b143128d5edca9af457320807dc1"
   end
 
   depends_on "go" => :build
