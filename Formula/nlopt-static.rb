@@ -8,6 +8,14 @@ class NloptStatic < Formula
   license "LGPL-2.1"
   head "https://github.com/stevengj/nlopt.git", branch: "master"
 
+  bottle do
+    root_url "https://ghcr.io/v2/viamrobotics/brews"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "a7a2eee5173922106e514f9ab3e3e7256be80871c6b0df9aacb9b342667ce274"
+    sha256 cellar: :any,                 arm64_sonoma:  "4737cce2fcf7fdac274b78f989af9be7fd23ee335808cf3884821a02ab85649a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d937c1500ea8fc98a41ce5b7e6d686763a4519036af6218b5326c40668be46a4"
+  end
+
   depends_on "cmake" => [:build, :test]
   conflicts_with "nlopt", because: "nlopt-static provides dynamic and static libraries"
 
