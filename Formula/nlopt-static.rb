@@ -1,4 +1,6 @@
 class NloptStatic < Formula
+  # WARNING: if you update this, you must manually create the bottle for it; otherwise RDK/CLI bottling will fail.
+  # The quickest way to do this is to edit test-bottle.yml in a branch so it only bottles + uploads nlopt, then run it.
   desc "Free/open-source library for nonlinear optimization"
   homepage "https://nlopt.readthedocs.io/"
   url "https://github.com/stevengj/nlopt/archive/v2.10.0.tar.gz"
