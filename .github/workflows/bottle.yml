@@ -29,6 +29,8 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: Homebrew/actions/setup-homebrew@master
+        with:
+          stable: true
       - uses: actions/checkout@v4
       - name: pull
         run: |
