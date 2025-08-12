@@ -1,3 +1,10 @@
+# This should mostly mirror the bottom of the bump-versions.yml workflow.
+# We use this to run just the build-and-upload steps for bottling.
+# This workflow is useful for testing changes to bottling + also to rerun if something has gone wrong.
+# Note: you may sometimes need to manually clean up a bad run by deleting the extra packages at:
+# https://github.com/orgs/viamrobotics/packages?repo_name=homebrew-brews
+# And by removing the bottle stanza in the formulas.
+
 on:
   workflow_dispatch:
 
@@ -21,4 +28,3 @@ jobs:
     uses: ./.github/workflows/upload.yml
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
-
