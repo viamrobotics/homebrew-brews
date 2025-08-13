@@ -1,8 +1,8 @@
 class Viam < Formula
   desc "CLI for managing robots, orgs, etc. (See viam-server for running a robot)"
   homepage "https://docs.viam.com/cli/"
-  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.88.0.tar.gz"
-  sha256 "33b80e380b15d377d6065a18f4d77b2e06a5a6291e405c03f5a5ca1d8e04836d"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.88.1.tar.gz"
+  sha256 "0ad8a3c5e66f2ecbb1f0902fa6de617ee88b2a845690ee63740a0864e9b41e90"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   bottle do
