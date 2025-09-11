@@ -45,11 +45,11 @@ class ViamServer < Formula
     etc.install "etc/configs/fake.json" => "viam.json"
   end
 
-  service do
-    log_path var/"log/viam.log"
-    error_log_path var/"log/viam.log"
-    run [bin/"viam-server", "-config", etc/"viam.json"]
-  end
+  # service do
+  #   log_path var/"log/viam.log"
+  #   error_log_path var/"log/viam.log"
+  #   run [bin/"viam-server", "-config", etc/"viam.json"]
+  # end
 
   def caveats
     <<~EOS
