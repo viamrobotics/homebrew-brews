@@ -49,9 +49,6 @@ class ViamServer < Formula
     <<~EOS
       Note that when installed via homebrew, the default location for the viam-server config is
       #{HOMEBREW_PREFIX}/etc/viam.json
-
-      To manage viam-server as a service, use brew's service command. Run the following for more info:
-      # brew services --help
     EOS
   end
 end
