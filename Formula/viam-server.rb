@@ -45,19 +45,10 @@ class ViamServer < Formula
     etc.install "etc/configs/fake.json" => "viam.json"
   end
 
-  service do
-    log_path var/"log/viam.log"
-    error_log_path var/"log/viam.log"
-    run [bin/"viam-server", "-config", etc/"viam.json"]
-  end
-
   def caveats
     <<~EOS
       Note that when installed via homebrew, the default location for the viam-server config is
       #{HOMEBREW_PREFIX}/etc/viam.json
-
-      To manage viam-server as a service, use brew's service command. Run the following for more info:
-      # brew services --help
     EOS
   end
 end
