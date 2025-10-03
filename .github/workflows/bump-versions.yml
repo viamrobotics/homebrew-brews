@@ -103,3 +103,19 @@ jobs:
     uses: ./.github/workflows/upload.yml
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  slack-workflow-status:
+    if: ${{ failure() }}
+    name: Post Workflow Status To Slack
+    needs: upload
+    runs-on: ubuntu-latest
+    permissions:
+      actions: 'read'
+    steps:
+      - name: Slack Workflow Notification
+        uses: Gamesight/slack-workflow-status@68bf00d0dbdbcb206c278399aa1ef6c14f74347a # v1.3.0
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          channel: '#team-devops'
+          name: 'Workflow Status'
