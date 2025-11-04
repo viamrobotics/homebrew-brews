@@ -29,19 +29,15 @@ class ViamServer < Formula
     ) do
       system "make", "server"
     end
-    if OS.linux?
-      if Hardware::CPU.intel?
-        bin.install "bin/Linux-x86_64/viam-server" => "viam-server"
-      elsif Hardware::CPU.arm?
-        bin.install "bin/Linux-aarch64/viam-server" => "viam-server"
-      end
-    elsif OS.mac?
-      if Hardware::CPU.intel?
-        bin.install "bin/Darwin-x86_64/viam-server" => "viam-server"
-      elsif Hardware::CPU.arm?
-        bin.install "bin/Darwin-arm64/viam-server" => "viam-server"
-      end
+
+    os = OS.linux? ? "Linux" : "Darwin"
+    arch = if Hardware::CPU.intel?
+      "x86_64"
+    elsif Hardware::CPU.arm?
+      OS.linux? ? "aarch64" : "arm64"
     end
+
+    bin.install "bin/#{os}-#{arch}/viam-server"
     etc.install "etc/configs/fake.json" => "viam.json"
   end
 
@@ -50,5 +46,9 @@ class ViamServer < Formula
       Note that when installed via homebrew, the default location for the viam-server config is
       #{HOMEBREW_PREFIX}/etc/viam.json
     EOS
+  end
+
+  test do
+    assert_match "Viam RDK", shell_output("#{bin}/viam-server --version 2>&1")
   end
 end

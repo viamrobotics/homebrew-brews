@@ -3,6 +3,7 @@ class Viam < Formula
   homepage "https://docs.viam.com/cli/"
   url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.99.0.tar.gz"
   sha256 "79b072259520e428cbe53eccdfeec9aafd8e5509614fcef3a51c22abc0ca2a40"
+  license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
   bottle do
@@ -16,8 +17,15 @@ class Viam < Formula
   depends_on "go" => :build
 
   def install
-    ENV["TAG_VERSION"] = version
-    system("make", "cli-ci")
+    with_env(
+      TAG_VERSION: version,
+    ) do
+      system "make", "cli-ci"
+    end
     bin.install Dir["bin/*/viam-cli"][0] => "viam"
+  end
+
+  test do
+    assert_match "Version", shell_output("#{bin}/viam version")
   end
 end
