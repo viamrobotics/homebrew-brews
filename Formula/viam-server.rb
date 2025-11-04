@@ -6,6 +6,8 @@ class ViamServer < Formula
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
+  requires_root(:forbidden) if OS.mac?
+
   bottle do
     root_url "https://ghcr.io/v2/viamrobotics/brews"
     rebuild 37

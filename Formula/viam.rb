@@ -5,6 +5,8 @@ class Viam < Formula
   sha256 "79b072259520e428cbe53eccdfeec9aafd8e5509614fcef3a51c22abc0ca2a40"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
+  requires_root(:forbidden) if OS.mac?
+
   bottle do
     root_url "https://ghcr.io/v2/viamrobotics/brews"
     rebuild 37
