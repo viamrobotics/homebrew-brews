@@ -5,8 +5,6 @@ class Viam < Formula
   sha256 "79b072259520e428cbe53eccdfeec9aafd8e5509614fcef3a51c22abc0ca2a40"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
-  requires_root(:forbidden) if OS.mac?
-
   bottle do
     root_url "https://ghcr.io/v2/viamrobotics/brews"
     rebuild 37
@@ -18,6 +16,10 @@ class Viam < Formula
   depends_on "go" => :build
 
   def install
+    if OS.mac? && Process.uid.zero?
+      odie "viam should not be installed with sudo on macOS. Please run: brew install viam"
+    end
+
     ENV["TAG_VERSION"] = version
     system("make", "cli-ci")
     bin.install Dir["bin/*/viam-cli"][0] => "viam"
