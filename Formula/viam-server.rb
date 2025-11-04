@@ -43,12 +43,27 @@ class ViamServer < Formula
 
   def caveats
     <<~EOS
-      Note that when installed via homebrew, the default location for the viam-server config is
-      #{HOMEBREW_PREFIX}/etc/viam.json
+      Optionally, viam-server can be run as a background service.
+
+      To run as a service, place your machine configuration from https://app.viam.com at:
+        #{HOMEBREW_PREFIX}/etc/viam.json
+
+      Then start the service with:
+        brew services start viam-server
+
+      For more information about services, run:
+        brew services --help
     EOS
   end
 
   test do
     assert_match "Viam RDK", shell_output("#{bin}/viam-server --version 2>&1")
+  end
+
+  service do
+    run [opt_bin/"viam-server", "-config", etc/"viam.json"]
+    keep_alive true
+    log_path var/"log/viam-server.log"
+    error_log_path var/"log/viam-server.log"
   end
 end
