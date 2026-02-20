@@ -14,7 +14,12 @@ Or `brew tap viamrobotics/brews` and then `brew install <formula>`.
 
 To test a specific formula locally, you can try the following:
 
-`brew reinstall --build-from-source <path-to-homebrew-brews>/Formula/<formula>.rb`
+`brew reinstall --build-from-source --formula <path-to-homebrew-brews>/Formula/<formula>.rb`
+
+Brew may tell you that you can't install _any_ formula that exists outside of a tap. You
+can get around this with `sudo cp -r /path/to/homebrew-brews
+/opt/homebrew/Library/Taps/[somedirectoryyoucreate]` and reinstalling from _that_ new path
+instead. There might be a smarter way to do this.
 
 To test uncommitted code that the formula relies on:
 1. Temporarily, until ready to commit the formula
