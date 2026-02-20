@@ -18,6 +18,7 @@ class NloptStatic < Formula
 
   depends_on "cmake" => [:build, :test]
   conflicts_with "nlopt", because: "nlopt-static provides dynamic and static libraries"
+  option "without-shared", "Only include static libraries and no dynamic libraries"
 
   def install
     args = *std_cmake_args + %w[
@@ -29,10 +30,12 @@ class NloptStatic < Formula
       -DNLOPT_TESTS=OFF
     ]
 
-    mkdir "build" do
-      system "cmake", *args, ".."
-      system "make"
-      system "make", "install"
+    if (!build.without? "shared")
+      mkdir "build" do
+        system "cmake", *args, ".."
+        system "make"
+        system "make", "install"
+      end
     end
 
     args = *args + %w[-DBUILD_SHARED_LIBS=OFF]
