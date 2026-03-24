@@ -8,10 +8,10 @@ class Viam < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/viamrobotics/brews"
-    rebuild 62
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3ce3a76fb5ae6f4e2d5210f4bdb807384c95fc76e57e90d9a2e62e9d8fdb571a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7ede28a4347c0aabc75e4e205b5eaf2314b78fe268318fff88d035ebd875eff6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a0a189d69048e0e221d8e4c213c5b5c43902bfbf7af79b43a2354e2315777e35"
+    rebuild 63
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1e1ce59cc8b9aa3b262c62e8cffb446298887882358bcc661e33f3711bf2e864"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "172c805b062e3d69673a2b642e29da463cc175558c4cad781b33c9a63cdfc162"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9652c6208aa565ce65c12870cee033f07dc25098fa7880391144d55e2a5d2780"
   end
 
   depends_on "go" => :build
