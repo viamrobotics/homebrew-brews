@@ -1,8 +1,8 @@
 class Viam < Formula
   desc "CLI for managing robots, orgs, etc. (See viam-server for running a robot)"
   homepage "https://docs.viam.com/cli/"
-  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.119.2.tar.gz"
-  sha256 "ca8f94f6c37b5d660e14ac9f0f5b0c572754e972a1d38f8033bddc5a3cafd4e1"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.121.0.tar.gz"
+  sha256 "c72570d70cff9c1bc82cda6d45791d143d723fe6ffbaf4a2876a4a912fde87bc"
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
@@ -13,10 +13,9 @@ class Viam < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/viamrobotics/brews"
-    rebuild 65
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e3b96eb87548c0e9fa312d8a6824dcfeb1a1f5a8d0b76bee7e57ff5c52f222cd"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fab4ac3770823673575461de1daac0c2e5293a6a0b630b97bc940781f1961810"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a18e087b5b892a9db788234c0804085c30445bee62ccb94a7ff434e0a6ec930c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9e47f95408e6b03e6f46d76f1eab9a2de8297f0fec9f6360057c6a7d92739db4"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "96422e987cc5cd03b58e6e4d2574970a77b0ecdaf8c4e4bab65d81dd6634c36b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "256123f223be2155ee19b9884d9b1e7cb664ffaf48751293ae1ab2c62224ce05"
   end
 
   depends_on "go" => :build
