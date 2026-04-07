@@ -20,4 +20,6 @@ then
 fi
 
 # note: --write-only flag here means that it doesn't open a PR
-brew bump-formula-pr --write-only --version "$NEW_VERSION" "$FORMULA"
+# --no-audit: skip brew audit (rubocop) which fails on the pinned container;
+# formulas are validated during the bottle step anyway
+brew bump-formula-pr --write-only --no-audit --version "$NEW_VERSION" "$FORMULA"
