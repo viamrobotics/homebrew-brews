@@ -48,21 +48,27 @@ class ViamServer < Formula
 
   def caveats
     <<~EOS
-      WARNING:
+      Optionally, viam-server can be run as a background service.
 
-      The Homebrew installation of viam-server is no longer the recommended installation
-      method for viam-server on MacOS.
+      To run as a service, place your machine configuration from https://app.viam.com at:
+        #{HOMEBREW_PREFIX}/etc/viam.json
 
-      We recommend installing viam-agent on MacOS with:
-        sudo /bin/sh -c "VIAM_API_KEY_ID=<KEYID> VIAM_API_KEY=<KEY> VIAM_PART_ID=<PARTID>; $(curl -fsSL https://storage.googleapis.com/packages.viam.com/apps/viam-agent/install.sh)"
+      Then start the service with:
+        brew services start viam-server
 
-      This will install viam-agent as a launchd daemon. For more information on managing viam-agent,
-      see our documentation here:
-        https://docs.viam.com/manage/reference/viam-agent/
+      For more information about services, run:
+        brew services --help
     EOS
   end
 
   test do
     assert_match "Viam RDK", shell_output("#{bin}/viam-server --version 2>&1")
+  end
+
+  service do
+    run [opt_bin/"viam-server", "-config", etc/"viam.json"]
+    keep_alive true
+    log_path var/"log/viam-server.log"
+    error_log_path var/"log/viam-server.log"
   end
 end
