@@ -28,6 +28,7 @@ class Viam < Formula
       system "make", "cli-ci"
     end
     bin.install Dir["bin/*/viam-cli"][0] => "viam"
+    generate_completions_from_executable(bin/"viam", "completion")
   end
 
   test do
