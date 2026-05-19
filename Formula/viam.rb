@@ -1,8 +1,8 @@
 class Viam < Formula
   desc "CLI for managing robots, orgs, etc. (See viam-server for running a robot)"
   homepage "https://docs.viam.com/cli/"
-  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.126.1.tar.gz"
-  sha256 "011fde4cb3ff31ae847964ac7d6edc58feaeacddd3c91b3542b089ca3f259de7"
+  url "https://github.com/viamrobotics/rdk/archive/refs/tags/v0.127.0.tar.gz"
+  sha256 "9afede1e4e8440151651fca44702aea399cc797c0ab1c5d726a1c85956e29a19"
   license "AGPL-3.0"
   head "https://github.com/viamrobotics/rdk.git", branch: "main"
 
