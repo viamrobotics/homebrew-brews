@@ -2,10 +2,20 @@ name: brew upload
 
 on:
     workflow_call:
+        inputs:
+            run_id:
+                type: string
+                default: ''
+                description: run holding the bottle artifacts; blank means this run
         secrets:
             GIT_ACCESS_TOKEN:
                 required: true
     workflow_dispatch:
+        inputs:
+            run_id:
+                type: string
+                required: false
+                description: run holding the bottle artifacts; blank means this run
 
 env:
     # if you don't override root-url it will upload to / download from the wrong place
@@ -48,11 +58,13 @@ jobs:
         - name: download artifacts
           env:
             GH_TOKEN: ${{ github.token }}
+            RUN_ID: ${{ inputs.run_id }}
+            THIS_RUN_ID: ${{ github.run_id }}
           run: |
             # trust before tap: Homebrew 7+ refuses to tap an untrusted third-party tap
             brew trust viamrobotics/brews
             brew tap viamrobotics/brews
-            gh run download ${{ github.run_id }}
+            gh run download "${RUN_ID:-$THIS_RUN_ID}"
             mv */*.bottle.* .
             ls
     
