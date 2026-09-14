@@ -10,6 +10,8 @@ on:
 env:
     # if you don't override root-url it will upload to / download from the wrong place
     ROOT_URL: https://ghcr.io/v2/${{ github.repository }}
+    # keep brew at the version checked out by the "pin homebrew" step
+    HOMEBREW_NO_AUTO_UPDATE: '1'
 
 jobs:
     upload:
@@ -18,9 +20,16 @@ jobs:
           contents: write
           packages: write
         steps:
-        - uses: Homebrew/actions/setup-homebrew@master
+        # Homebrew/actions/setup-homebrew@2026.09.13.1
+        - uses: Homebrew/actions/setup-homebrew@1e34f2e2acaa766b7efacb8c26352e6abbb023f9
           with:
             stable: true
+        - name: pin homebrew
+          run: |
+            # setup-homebrew leaves brew on its newest tag; a fixed tag keeps bottling deterministic across releases
+            git -C "$(brew --repository)" fetch --quiet --force --tags origin
+            git -C "$(brew --repository)" checkout --quiet 7.0.1
+            brew --version
         - uses: actions/checkout@v4
           with:
             token: ${{ secrets.GIT_ACCESS_TOKEN }}
@@ -40,6 +49,8 @@ jobs:
           env:
             GH_TOKEN: ${{ github.token }}
           run: |
+            # trust before tap: Homebrew 7+ refuses to tap an untrusted third-party tap
+            brew trust viamrobotics/brews
             brew tap viamrobotics/brews
             gh run download ${{ github.run_id }}
             mv */*.bottle.* .
