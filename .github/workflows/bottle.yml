@@ -7,6 +7,10 @@ on:
         type: string
         default: viam
         description: which formula to bottle
+      ref:
+        type: string
+        default: ''
+        description: tap ref to bottle from; blank means the tap's default branch
     secrets:
       GIT_ACCESS_TOKEN:
         required: true
@@ -16,6 +20,10 @@ on:
         type: string
         default: viam
         description: which formula to bottle
+      ref:
+        type: string
+        required: false
+        description: tap ref to bottle from; blank means the tap's default branch
 
 env:
   # if you don't override root-url it will upload to / download from the wrong place
@@ -47,6 +55,8 @@ jobs:
           git pull
 
       - name: build bottle
+        env:
+          REF: ${{ inputs.ref }}
         run: |
           # without this force-install, the pkgconf dep of viam-server conflicts with the one github preinstalls on runners, and the build fails
           brew install --force --overwrite pkg-config
@@ -54,6 +64,16 @@ jobs:
           # trust before tap: Homebrew 7+ refuses to tap an untrusted third-party tap
           brew trust viamrobotics/brews
           brew tap viamrobotics/brews
+
+          # brew tap clones the tap's default branch, so a version bump that has not been
+          # merged yet is only visible once the tap checkout is moved onto its ref.
+          if [ -n "$REF" ]; then
+            TAP_DIR=$(brew --repository viamrobotics/brews)
+            git -C "$TAP_DIR" fetch --quiet origin "$REF"
+            git -C "$TAP_DIR" checkout --quiet -B bottling FETCH_HEAD
+            git -C "$TAP_DIR" log --oneline -1
+          fi
+
           # note: this fails on the nlopt dep to viam-server when viam-server already exists as bottle in the formula file.
           # weird edge case. recovery is to remove the bottle stanza and delete the uploaded package, then rerun.
           brew install --only-dependencies ${{ inputs.formula }}
