@@ -7,6 +7,10 @@ on:
                 type: string
                 default: ''
                 description: run holding the bottle artifacts; blank means this run
+            ref:
+                type: string
+                default: ''
+                description: staging branch to publish and fast-forward main to; blank pushes in place
         secrets:
             GIT_ACCESS_TOKEN:
                 required: true
@@ -16,6 +20,10 @@ on:
                 type: string
                 required: false
                 description: run holding the bottle artifacts; blank means this run
+            ref:
+                type: string
+                required: false
+                description: staging branch to publish and fast-forward main to; blank pushes in place
 
 env:
     # if you don't override root-url it will upload to / download from the wrong place
@@ -60,10 +68,20 @@ jobs:
             GH_TOKEN: ${{ github.token }}
             RUN_ID: ${{ inputs.run_id }}
             THIS_RUN_ID: ${{ github.run_id }}
+            REF: ${{ inputs.ref }}
           run: |
             # trust before tap: Homebrew 7+ refuses to tap an untrusted third-party tap
             brew trust viamrobotics/brews
             brew tap viamrobotics/brews
+
+            # pr-upload rewrites the bottle block in the tap checkout and commits it, so the
+            # checkout has to sit on the staged bump for the two to end up on one branch.
+            if [ -n "$REF" ]; then
+              TAP_DIR=$(brew --repository viamrobotics/brews)
+              git -C "$TAP_DIR" fetch --quiet origin "$REF"
+              git -C "$TAP_DIR" checkout --quiet -B publishing FETCH_HEAD
+            fi
+
             gh run download "${RUN_ID:-$THIS_RUN_ID}"
             mv */*.bottle.* .
             ls
@@ -75,9 +93,19 @@ jobs:
           run: brew pr-upload --root-url $ROOT_URL
     
         - name: push changes
+          env:
+            REF: ${{ inputs.ref }}
           run: |
-            cd $(brew --prefix)/Homebrew/Library/Taps/${{ github.repository }}
+            cd "$(brew --repository viamrobotics/brews)"
             # note: the tap is on the current branch rather than main. not sure why, seems sensitive to whether we run actions/checkout.
             git log | head
             git status
-            git push
+            if [ -n "$REF" ]; then
+              # Main moves only here, so a bump and the bottle matching it arrive together.
+              git fetch --quiet origin main
+              git rebase origin/main
+              git push origin HEAD:main
+              git push --delete origin "$REF" || true
+            else
+              git push
+            fi
