@@ -50,6 +50,8 @@ jobs:
         run: |
           # without this force-install, the pkgconf dep of viam-server conflicts with the one github preinstalls on runners, and the build fails
           brew install --force --overwrite pkg-config
+          # macos runners preinstall a linked openssl@1.1, which blocks openssl@3 from linking when a dep upgrades it
+          brew unlink openssl@1.1 || true
 
           # trust before tap: Homebrew 7+ refuses to tap an untrusted third-party tap
           brew trust viamrobotics/brews
