@@ -48,8 +48,9 @@ jobs:
 
       - name: build bottle
         run: |
-          # without this force-install, the pkgconf and openssl@3 deps of viam-server conflict with files github preinstalls on runners, and the build fails
-          brew install --force --overwrite pkg-config openssl@3
+          # pkgconf conflicts with files github preinstalls on runners. openssl@4 must link before the deps step: linking it
+          # there unlinks openssl@3, whose lock that step already holds, and brew fails (Homebrew/brew#24204)
+          brew install --force --overwrite pkg-config openssl@4
 
           # trust before tap: Homebrew 7+ refuses to tap an untrusted third-party tap
           brew trust viamrobotics/brews
