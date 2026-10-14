@@ -21,6 +21,7 @@ jobs:
     outputs:
       bump-viam: ${{ steps.viam.outputs.bump }}
       bump-viam-server: ${{ steps.viam-server.outputs.bump }}
+      staging-branch: ${{ steps.staging.outputs.branch }}
     env:
       HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
       # these no-update flags are to prevent us from (defeats the purpose of pinning)
@@ -68,10 +69,28 @@ jobs:
         echo bump=$(./needs-bump.sh viam) >> "$GITHUB_OUTPUT"
         ./bump-version.sh viam
 
+    # Only viam and viam-server carry a bottle block; the rest build from source and cannot
+    # 404, so they land on main directly while a bottled bump waits on a staging branch.
+    - name: Decide where the bump lands
+      id: staging
+      env:
+        BUMP_VIAM: ${{ steps.viam.outputs.bump }}
+        BUMP_VIAM_SERVER: ${{ steps.viam-server.outputs.bump }}
+      run: |
+        if [ "$BUMP_VIAM" = "true" ] || [ "$BUMP_VIAM_SERVER" = "true" ]; then
+          echo "branch=auto-bump/${{ github.run_id }}" >> "$GITHUB_OUTPUT"
+          echo "staged=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "branch=" >> "$GITHUB_OUTPUT"
+          echo "staged=false" >> "$GITHUB_OUTPUT"
+        fi
+
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Auto-update of package versions
+        branch: ${{ steps.staging.outputs.branch }}
+        create_branch: ${{ steps.staging.outputs.staged }}
 
   bottle-viam:
     needs: bump-versions
@@ -81,6 +100,7 @@ jobs:
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam
+      ref: ${{ needs.bump-versions.outputs.staging-branch }}
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
@@ -92,15 +112,23 @@ jobs:
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam-server
+      ref: ${{ needs.bump-versions.outputs.staging-branch }}
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
+  # One failed bottle holds back every formula staged in the run, since they share a branch.
+  # An unlanded bump leaves needs-bump.sh reporting true, so the next hourly run retries.
   upload:
-    needs: [bottle-viam, bottle-viam-server]
+    needs: [bump-versions, bottle-viam, bottle-viam-server]
     if: |
-      needs.bottle-viam.result == 'success' || 
-      needs.bottle-viam-server.result == 'success'
+      !cancelled() &&
+      needs.bottle-viam.result != 'failure' &&
+      needs.bottle-viam-server.result != 'failure' &&
+      (needs.bottle-viam.result == 'success' ||
+       needs.bottle-viam-server.result == 'success')
     uses: ./.github/workflows/upload.yml
+    with:
+      ref: ${{ needs.bump-versions.outputs.staging-branch }}
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
