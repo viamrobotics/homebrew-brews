@@ -95,19 +95,30 @@ jobs:
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
-  upload:
-    needs: [bottle-viam, bottle-viam-server]
-    if: |
-      needs.bottle-viam.result == 'success' || 
-      needs.bottle-viam-server.result == 'success'
+  upload-viam:
+    needs: bottle-viam
+    concurrency:
+      group: ${{ github.ref }}-upload
     uses: ./.github/workflows/upload.yml
+    with:
+      formula: viam
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  upload-viam-server:
+    needs: bottle-viam-server
+    concurrency:
+      group: ${{ github.ref }}-upload
+    uses: ./.github/workflows/upload.yml
+    with:
+      formula: viam-server
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
   slack-workflow-status:
     if: ${{ failure() }}
     name: Post Workflow Status To Slack
-    needs: upload
+    needs: [upload-viam, upload-viam-server]
     runs-on: ubuntu-latest
     permissions:
       actions: 'read'

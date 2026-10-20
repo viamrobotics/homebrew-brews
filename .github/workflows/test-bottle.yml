@@ -23,8 +23,22 @@ jobs:
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
-  upload:
-    needs: [bottle-viam, bottle-viam-server]
+  upload-viam:
+    needs: bottle-viam
+    concurrency:
+      group: ${{ github.ref }}-upload
     uses: ./.github/workflows/upload.yml
+    with:
+      formula: viam
+    secrets:
+      GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+  upload-viam-server:
+    needs: bottle-viam-server
+    concurrency:
+      group: ${{ github.ref }}-upload
+    uses: ./.github/workflows/upload.yml
+    with:
+      formula: viam-server
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}

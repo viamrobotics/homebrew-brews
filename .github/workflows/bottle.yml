@@ -26,6 +26,7 @@ env:
 jobs:
   bottle:
     strategy:
+      fail-fast: false
       matrix:
         runs-on: [ubuntu-22.04, macos-15, macos-26]
     runs-on: ${{ matrix.runs-on }}
@@ -47,6 +48,8 @@ jobs:
           git pull
 
       - name: build bottle
+        env:
+          FORMULA: ${{ inputs.formula }}
         run: |
           # pkgconf conflicts with files github preinstalls on runners. openssl@4 must link before the deps step: linking it
           # there unlinks openssl@3, whose lock that step already holds, and brew fails (Homebrew/brew#24204)
@@ -57,9 +60,14 @@ jobs:
           brew tap viamrobotics/brews
           # note: this fails on the nlopt dep to viam-server when viam-server already exists as bottle in the formula file.
           # weird edge case. recovery is to remove the bottle stanza and delete the uploaded package, then rerun.
-          brew install --only-dependencies ${{ inputs.formula }}
-          brew install --build-bottle ${{ inputs.formula }}
-          brew bottle --json --root-url $ROOT_URL ${{ inputs.formula }}
+          brew install --only-dependencies "$FORMULA"
+          # retries ride out transient fetch errors (e.g. Go module proxy resets); brew removes a failed build's keg
+          for attempt in 1 2 3; do
+            brew install --build-bottle "$FORMULA" && break
+            [ "$attempt" -lt 3 ] || exit 1
+            sleep $((attempt * 30))
+          done
+          brew bottle --json --root-url "$ROOT_URL" "$FORMULA"
       
       - name: Generate UUID
         id: uuid_step
@@ -67,6 +75,6 @@ jobs:
   
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.runs-on }}-${{ steps.uuid_step.outputs.uuid }}
+          name: ${{ inputs.formula }}--${{ matrix.runs-on }}-${{ steps.uuid_step.outputs.uuid }}
           if-no-files-found: error
           path: '*.bottle.*'
