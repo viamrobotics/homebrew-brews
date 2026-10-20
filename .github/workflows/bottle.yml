@@ -7,6 +7,10 @@ on:
         type: string
         default: viam
         description: which formula to bottle
+      ref:
+        type: string
+        default: ''
+        description: branch holding the version bump to bottle; blank means the triggering ref
     secrets:
       GIT_ACCESS_TOKEN:
         required: true
@@ -16,6 +20,10 @@ on:
         type: string
         default: viam
         description: which formula to bottle
+      ref:
+        type: string
+        required: false
+        description: branch holding the version bump to bottle; blank means the triggering ref
 
 env:
   # if you don't override root-url it will upload to / download from the wrong place
@@ -41,7 +49,10 @@ jobs:
           git -C "$(brew --repository)" fetch --quiet --force --tags origin
           git -C "$(brew --repository)" checkout --quiet 7.0.1
           brew --version
+      # setup-homebrew symlinks the tap to this checkout, so brew builds whatever ref lands here
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
       - name: pull
         run: |
           # see note below on why we need to pull

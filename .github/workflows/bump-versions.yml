@@ -69,9 +69,7 @@ jobs:
         ./bump-version.sh viam
 
     - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Auto-update of package versions
+      run: ./commit-bumps.sh viam viam-server
 
   bottle-viam:
     needs: bump-versions
@@ -81,6 +79,7 @@ jobs:
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam
+      ref: auto-bump/${{ github.run_id }}/viam
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
@@ -92,6 +91,7 @@ jobs:
     uses: ./.github/workflows/bottle.yml
     with:
       formula: viam-server
+      ref: auto-bump/${{ github.run_id }}/viam-server
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
@@ -102,6 +102,7 @@ jobs:
     uses: ./.github/workflows/upload.yml
     with:
       formula: viam
+      ref: auto-bump/${{ github.run_id }}/viam
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
@@ -112,6 +113,7 @@ jobs:
     uses: ./.github/workflows/upload.yml
     with:
       formula: viam-server
+      ref: auto-bump/${{ github.run_id }}/viam-server
     secrets:
       GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
