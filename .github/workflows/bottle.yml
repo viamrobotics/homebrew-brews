@@ -75,6 +75,6 @@ jobs:
   
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.runs-on }}-${{ steps.uuid_step.outputs.uuid }}
+          name: ${{ inputs.formula }}--${{ matrix.runs-on }}-${{ steps.uuid_step.outputs.uuid }}
           if-no-files-found: error
           path: '*.bottle.*'
